@@ -65,14 +65,14 @@ public class CalcularValorReservaBO {
 			DayOfWeek dayOfWeek = dataParaCalculo.getDayOfWeek();
 			if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
 				quantidadeDiariasFimDeSemnana++;
-				if (reserva.isAdicionalVeiculo()) {
+				if (reserva.getAdicionalVeiculo()) {
 					quantidadeEstacionamentoFimDeSemnana++;
 				}
 				valorUltimaDiaria = VALOR_DIARIA_FIM_DE_SEMANA;
 				valorUltimoEstacionamento = VALOR_ESTACIONAMENTO_FIM_DE_SEMANA;
 			} else {
 				quantidadeDiariasNormais++;
-				if (reserva.isAdicionalVeiculo()) {
+				if (reserva.getAdicionalVeiculo()) {
 					quantidadeEstacionamentoNormais++;
 				}
 				valorUltimaDiaria = VALOR_DIARIA_NORMAL;
@@ -88,7 +88,7 @@ public class CalcularValorReservaBO {
 
 		if (checkOutAposHoraLimite) {
 			valor += valorUltimaDiaria;
-			if (reserva.isAdicionalVeiculo()) {
+			if (reserva.getAdicionalVeiculo()) {
 				valor += valorUltimoEstacionamento;
 			}
 		}

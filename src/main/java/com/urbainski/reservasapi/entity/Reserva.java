@@ -58,6 +58,6 @@ public class Reserva {
 	
 	@NotNull
 	@Column(name = "adicional_veiculo")
-	private boolean adicionalVeiculo;
+	private Boolean adicionalVeiculo;
 	
 }
