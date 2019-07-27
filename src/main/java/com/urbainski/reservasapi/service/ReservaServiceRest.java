@@ -33,30 +33,30 @@ public class ReservaServiceRest {
 
 	@Autowired
 	private ReservaBO boReserva;
-	
+
 	@PostMapping
 	public ResponseEntity<Reserva> save(@Valid @RequestBody Reserva reserva) {
 		Reserva reservaSalva = boReserva.save(reserva);
 		return ResponseEntity.status(HttpStatus.CREATED).body(reservaSalva);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Reserva> update(@PathVariable Long id, @Valid @RequestBody Reserva reserva) {
 		Reserva reservaSalva = boReserva.update(id, reserva);
 		return ResponseEntity.ok(reservaSalva);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	@ResponseStatus(value =  HttpStatus.NO_CONTENT)
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		boReserva.delete(id);
 	}
-	
+
 	@GetMapping
 	public Page<Reserva> findAll(FiltroReservaDTO filtroReservaDto, Pageable pageable) {
 		return boReserva.findAll(filtroReservaDto, pageable);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Reserva> findOne(@PathVariable Long id) {
 		Reserva reserva = boReserva.findOne(id);
@@ -65,5 +65,5 @@ public class ReservaServiceRest {
 		}
 		return ResponseEntity.ok(reserva);
 	}
-	
+
 }

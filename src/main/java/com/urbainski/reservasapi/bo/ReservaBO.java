@@ -2,7 +2,6 @@ package com.urbainski.reservasapi.bo;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import com.urbainski.reservasapi.dto.FiltroReservaDTO;
 import com.urbainski.reservasapi.entity.Cliente;
 import com.urbainski.reservasapi.entity.Reserva;
 import com.urbainski.reservasapi.exceptions.ClienteNaoExisteException;
+import com.urbainski.reservasapi.exceptions.ReservaNaoExisteException;
 import com.urbainski.reservasapi.repository.ClienteRepository;
 import com.urbainski.reservasapi.repository.ReservaRepository;
 
@@ -75,7 +75,7 @@ public class ReservaBO {
 	public Reserva findById(Long id) {
 		Reserva reserva = reservaRepository.findById(id).orElse(null);
 		if (reserva == null) {
-			throw new EmptyResultDataAccessException("Não foi localizado a reserva com o identificador [" + id + "].", 1);
+			throw new ReservaNaoExisteException(id);
 		}
 		return reserva;
 	}
@@ -98,7 +98,7 @@ public class ReservaBO {
 		}
 		
 		if (!clienteExiste) {
-			throw new ClienteNaoExisteException();
+			throw new ClienteNaoExisteException(cliente.getId());
 		}
 	}
 

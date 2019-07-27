@@ -16,6 +16,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 
+ * @author Cristian Urbainski
+ * @since 24/07/2019
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -6,15 +6,15 @@ import lombok.Getter;
 /**
  * 
  * @author Cristian Urbainski
- * @since 25/07/2019
+ * @since 27/07/2019
  *
  */
 @Getter
 @AllArgsConstructor
-public class ClienteNaoExisteException extends RuntimeException {
-
-	private static final long serialVersionUID = 1L;
+public class ReservaNaoExisteException extends RuntimeException {
 	
-	private Long idCliente;
+	private static final long serialVersionUID = 1L;
+
+	private Long idReserva;
 	
 }
