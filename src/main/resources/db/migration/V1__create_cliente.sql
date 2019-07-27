@@ -5,6 +5,8 @@ CREATE TABLE "cliente"(
  "documento" Character varying(11) NOT NULL
 );
 
+ALTER TABLE "cliente" ADD CONSTRAINT "PK_cliente" PRIMARY KEY ("id");
+
 INSERT INTO "cliente" ("nome", "telefone", "documento") values
 	('Cristian Elder Urbainski', '49991021372', '74426136083'),
 	('Joeli Vivian Urbainski', '49991223302', '83747906010'),
