@@ -84,6 +84,14 @@ public class ReservaBO {
 		return reservaRepository.findById(id).orElse(null);
 	}
 	
+	public Page<Reserva> findAllByDataCheckOutIsNull(Pageable pageable) {
+		return reservaRepository.findAllByDataCheckOutIsNull(pageable);
+	}
+	
+	public Page<Reserva> findAllByDataCheckOutIsNotNull(Pageable pageable) {
+		return reservaRepository.findAllByDataCheckOutIsNotNull(pageable);
+	}
+	
 	/**
 	 * Método responsável pelas valições do cliente para poder salvar as informações da reserva.
 	 * 

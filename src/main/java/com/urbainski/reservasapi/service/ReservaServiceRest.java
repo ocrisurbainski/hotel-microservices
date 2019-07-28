@@ -65,5 +65,15 @@ public class ReservaServiceRest {
 		}
 		return ResponseEntity.ok(reserva);
 	}
+	
+	@GetMapping("/check-in")
+	public Page<Reserva> findAllByDataCheckOutIsNull(Pageable pageable) {
+		return boReserva.findAllByDataCheckOutIsNull(pageable);
+	}
+	
+	@GetMapping("/check-out")
+	public Page<Reserva> findAllByDataCheckOutIsNotNull(Pageable pageable) {
+		return boReserva.findAllByDataCheckOutIsNotNull(pageable);
+	}
 
 }
