@@ -8,10 +8,10 @@ import com.urbainski.reservasapi.config.ReservasApiProperty;
 
 @SpringBootApplication
 @EnableConfigurationProperties(ReservasApiProperty.class)
-public class ReservasApiApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReservasApiApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
