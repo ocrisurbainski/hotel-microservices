@@ -1,0 +1,14 @@
+package com.urbainski.reservasapi.client.infra.controller;
+
+import com.urbainski.reservasapi.client.Client;
+import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientRequestDTO;
+import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientResponseDTO;
+
+@org.mapstruct.Mapper(componentModel = "spring")
+public interface ClientControllerMapper {
+
+    Client toClient(CreateClientRequestDTO dto);
+
+    CreateClientResponseDTO toCreateClientResponseDTO(Client client);
+
+}

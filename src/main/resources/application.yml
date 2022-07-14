@@ -5,28 +5,14 @@ server:
     context-path: /
 
 spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:reservas-api-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=false;
-    username: cristian_urbainski
-    password: 123456
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  data:
+    mongodb:
+      uri: mongodb://${RESERVAS_API_USER:reservas-api-user}:${RESERVAS_API_PASSWORD:reservas-api-pass}@${RESERVAS_API_DB_HOST:localhost}:${RESERVAS_API_DB_PORT:27017}/${RESERVAS_API_DB_NAME:reservas_api_db}
+      auto-index-creation: true
+      database: ${RESERVAS_API_DB_NAME:reservas_api_db}
 
   jackson:
     serialization:
       fail-on-empty-beans: false
     deserialization:
       fail-on-unknown-properties: true
-    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
-
-  flyway:
-    table: schema_history
-
-reservas:
-  origin-allowed: http://localhost:8080
