@@ -1,7 +1,9 @@
 package com.urbainski.reservasapi.client;
 
+import reactor.core.publisher.Mono;
+
 public interface ClientRepository {
 
-    Client save(Client client);
+    Mono<Client> save(Client client);
 
 }

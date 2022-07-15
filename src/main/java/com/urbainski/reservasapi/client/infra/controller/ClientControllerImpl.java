@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
@@ -30,14 +31,16 @@ public class ClientControllerImpl implements ClientController {
 
     @Override
     @PostMapping
-    public ResponseEntity<CreateClientResponseDTO> save(
-            @RequestBody @Valid CreateClientRequestDTO dto, UriComponentsBuilder componentsBuilder) {
+    public Mono<ResponseEntity<CreateClientResponseDTO>> save(
+            @RequestBody @Valid Mono<CreateClientRequestDTO> dto, UriComponentsBuilder componentsBuilder) {
 
-        var client = clientOperation.save(mapper.toClient(dto));
-        var responseDto = mapper.toCreateClientResponseDTO(client);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
         //var uri = componentsBuilder.path("/clients/{id}").buildAndExpand(responseDto.getId()).toUri();
         //return ResponseEntity.created(uri).body(responseDto);
+        return dto.map(mapper::toClient)
+                .flatMap(clientOperation::save)
+                .map(mapper::toCreateClientResponseDTO)
+                .map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value))
+                .log();
     }
 
 }

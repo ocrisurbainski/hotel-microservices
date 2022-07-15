@@ -4,9 +4,10 @@ import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientRequest
 import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 public interface ClientController {
 
-    ResponseEntity<CreateClientResponseDTO> save(CreateClientRequestDTO dto, UriComponentsBuilder componentsBuilder);
+    Mono<ResponseEntity<CreateClientResponseDTO>> save(Mono<CreateClientRequestDTO> dto, UriComponentsBuilder componentsBuilder);
 
 }
