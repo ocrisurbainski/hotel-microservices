@@ -1,11 +1,17 @@
 package com.urbainski.reservasapi.client.infra.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.urbainski.reservasapi.ben.validation.grop.CNPJGroup;
+import com.urbainski.reservasapi.ben.validation.grop.CPFGroup;
 import com.urbainski.reservasapi.client.ClientType;
+import com.urbainski.reservasapi.client.infra.controller.dto.validation.provider.CreateClientGroupSequenceProvider;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.group.GroupSequenceProvider;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,12 +20,15 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@GroupSequenceProvider(value = CreateClientGroupSequenceProvider.class)
 public class CreateClientRequestDTO {
 
     @NotNull
     @Size(min = 10, max = 500)
     private String name;
     @NotBlank
+    @CPF(groups = CPFGroup.class)
+    @CNPJ(groups = CNPJGroup.class)
     private String document;
     private String telephone;
     @NotNull
