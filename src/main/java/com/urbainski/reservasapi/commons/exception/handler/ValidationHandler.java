@@ -1,10 +1,10 @@
-package com.urbainski.reservasapi.exception.handler;
+package com.urbainski.reservasapi.commons.exception.handler;
 
-import com.urbainski.reservasapi.exception.AbstractGenericException;
-import com.urbainski.reservasapi.exception.handler.dto.ErrorDTO;
-import com.urbainski.reservasapi.exception.handler.dto.ErrorFieldDTO;
-import com.urbainski.reservasapi.exception.handler.dto.ResponseErrorDTO;
-import com.urbainski.reservasapi.util.SystemMessages;
+import com.urbainski.reservasapi.commons.exception.AbstractGenericException;
+import com.urbainski.reservasapi.commons.exception.handler.dto.ErrorDTO;
+import com.urbainski.reservasapi.commons.exception.handler.dto.ErrorFieldDTO;
+import com.urbainski.reservasapi.commons.exception.handler.dto.ResponseErrorDTO;
+import com.urbainski.reservasapi.commons.message.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
@@ -35,15 +35,9 @@ public class ValidationHandler {
     public ResponseEntity<ResponseErrorDTO> handlerAbstractGenericException(AbstractGenericException exception) {
 
         Objects.requireNonNull(exception);
-
-        var message = exception.getMessage();
-        if (exception.getSystemMessages() != null) {
-            message = messageSource.getMessage(exception.getSystemMessages().getKey(), null, Locale.getDefault());
-        }
-
         var dto = ResponseErrorDTO.builder()
                 .code(exception.getStatus())
-                .message(message)
+                .message(exception.getMessage())
                 .build();
 
         return ResponseEntity.status(exception.getStatus()).body(dto);

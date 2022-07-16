@@ -1,4 +1,4 @@
-package com.urbainski.reservasapi.exception.handler.dto;
+package com.urbainski.reservasapi.commons.exception.handler.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

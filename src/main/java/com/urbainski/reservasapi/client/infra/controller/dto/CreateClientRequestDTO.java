@@ -1,8 +1,8 @@
 package com.urbainski.reservasapi.client.infra.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.urbainski.reservasapi.ben.validation.grop.CNPJGroup;
-import com.urbainski.reservasapi.ben.validation.grop.CPFGroup;
+import com.urbainski.reservasapi.commons.bean.validation.group.CNPJGroup;
+import com.urbainski.reservasapi.commons.bean.validation.group.CPFGroup;
 import com.urbainski.reservasapi.client.ClientType;
 import com.urbainski.reservasapi.client.infra.controller.dto.validation.provider.CreateClientGroupSequenceProvider;
 import lombok.Getter;

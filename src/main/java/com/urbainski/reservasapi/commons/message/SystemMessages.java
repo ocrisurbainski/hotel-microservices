@@ -1,4 +1,4 @@
-package com.urbainski.reservasapi.util;
+package com.urbainski.reservasapi.commons.message;
 
 public enum SystemMessages {
     VALIDATION_FAILED("msg.validation.failed.key"),

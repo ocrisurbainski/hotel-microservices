@@ -2,8 +2,8 @@ package com.urbainski.reservasapi.client.infra.controller.dto.validation.provide
 
 import com.urbainski.reservasapi.client.ClientType;
 import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientRequestDTO;
-import com.urbainski.reservasapi.ben.validation.grop.CNPJGroup;
-import com.urbainski.reservasapi.ben.validation.grop.CPFGroup;
+import com.urbainski.reservasapi.commons.bean.validation.group.CNPJGroup;
+import com.urbainski.reservasapi.commons.bean.validation.group.CPFGroup;
 import org.hibernate.validator.spi.group.DefaultGroupSequenceProvider;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.urbainski.reservasapi.exception.handler.dto;
+package com.urbainski.reservasapi.commons.exception.handler.dto;
 
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
