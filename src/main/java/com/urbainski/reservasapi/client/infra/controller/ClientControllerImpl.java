@@ -5,7 +5,6 @@ import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientRequest
 import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientResponseDTO;
 import com.urbainski.reservasapi.client.infra.controller.dto.GetClientByIdResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,12 +31,13 @@ public class ClientControllerImpl implements ClientController {
     public Mono<ResponseEntity<CreateClientResponseDTO>> save(
             @RequestBody @Valid Mono<CreateClientRequestDTO> dto, UriComponentsBuilder componentsBuilder) {
 
-        //var uri = componentsBuilder.path("/clients/{id}").buildAndExpand(responseDto.getId()).toUri();
-        //return ResponseEntity.created(uri).body(responseDto);
         return dto.map(mapper::toClient)
                 .flatMap(clientOperation::save)
                 .map(mapper::toCreateClientResponseDTO)
-                .map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value))
+                .map(value -> {
+                    var uri = componentsBuilder.path("/clients/{id}").buildAndExpand(value.getId()).toUri();
+                    return ResponseEntity.created(uri).body(value);
+                })
                 .log();
     }
 
