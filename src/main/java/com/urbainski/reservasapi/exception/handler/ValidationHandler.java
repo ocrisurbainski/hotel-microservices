@@ -1,6 +1,6 @@
 package com.urbainski.reservasapi.exception.handler;
 
-import com.urbainski.reservasapi.exception.NotFoundException;
+import com.urbainski.reservasapi.exception.AbstractGenericException;
 import com.urbainski.reservasapi.exception.handler.dto.ErrorDTO;
 import com.urbainski.reservasapi.exception.handler.dto.ErrorFieldDTO;
 import com.urbainski.reservasapi.exception.handler.dto.ResponseErrorDTO;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.WebExchangeBindException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,13 +30,22 @@ public class ValidationHandler {
         this.messageSource = messageSource;
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ResponseErrorDTO> handlerNotFoundException(NotFoundException exception) {
+    @ExceptionHandler(AbstractGenericException.class)
+    public ResponseEntity<ResponseErrorDTO> handlerAbstractGenericException(AbstractGenericException exception) {
+
+        Objects.requireNonNull(exception);
+
+        var message = exception.getMessage();
+        if (exception.getSystemMessages() != null) {
+            message = messageSource.getMessage(exception.getSystemMessages().getKey(), null, Locale.getDefault());
+        }
+
         var dto = ResponseErrorDTO.builder()
-                .code(HttpStatus.NOT_FOUND)
-                .message(exception.getMessage())
+                .code(exception.getStatus())
+                .message(message)
                 .build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dto);
+
+        return ResponseEntity.status(exception.getStatus()).body(dto);
     }
 
     @ExceptionHandler(WebExchangeBindException.class)

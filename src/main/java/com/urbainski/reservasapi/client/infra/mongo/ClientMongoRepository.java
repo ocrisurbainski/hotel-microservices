@@ -2,6 +2,8 @@ package com.urbainski.reservasapi.client.infra.mongo;
 
 import com.urbainski.reservasapi.client.Client;
 import com.urbainski.reservasapi.client.ClientRepository;
+import com.urbainski.reservasapi.exception.NotFoundException;
+import com.urbainski.reservasapi.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -29,8 +31,17 @@ public class ClientMongoRepository implements ClientRepository {
                 .map(mapper::toClientDocument)
                 .flatMap(clientSpringRepository::save)
                 .map(mapper::toClient)
-                .doOnSuccess(value -> log.info("Success when registering a new customer, id: {}", value.getId()))
+                .doOnSuccess(value -> log.debug("Success when registering a new customer, id: {}", value.getId()))
                 .doOnError(throwable -> onErrorInsert(throwable, client));
+    }
+
+    @Override
+    public Mono<Client> findById(String id) {
+        return this.clientSpringRepository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException(SystemMessages.CLIENT_NOT_FOUND)))
+                .map(mapper::toClient)
+                .doOnError(throwable -> log.error("Error in method ::findById::", throwable.getCause()))
+                .doOnSuccess(value -> log.debug("Success in method ::findById:: {}", value));
     }
 
     private void onErrorInsert(Throwable throwable, Client client) {

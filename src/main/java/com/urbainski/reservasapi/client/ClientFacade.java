@@ -22,4 +22,9 @@ public class ClientFacade implements ClientOperation {
         return clientRepository.save(client);
     }
 
+    @Override
+    public Mono<Client> findById(String id) {
+        return clientRepository.findById(id);
+    }
+
 }

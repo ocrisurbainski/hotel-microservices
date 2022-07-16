@@ -6,4 +6,6 @@ public interface ClientOperation {
 
     Mono<Client> save(Client client);
 
+    Mono<Client> findById(String id);
+
 }

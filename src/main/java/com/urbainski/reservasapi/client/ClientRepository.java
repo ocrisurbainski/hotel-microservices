@@ -6,4 +6,6 @@ public interface ClientRepository {
 
     Mono<Client> save(Client client);
 
+    Mono<Client> findById(String id);
+
 }

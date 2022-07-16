@@ -1,9 +1,12 @@
 package com.urbainski.reservasapi.exception;
 
-public class NotFoundException extends RuntimeException {
+import com.urbainski.reservasapi.util.SystemMessages;
+import org.springframework.http.HttpStatus;
 
-    public NotFoundException(String message) {
-        super(message);
+public class NotFoundException extends AbstractGenericException {
+
+    public NotFoundException(SystemMessages systemMessages) {
+        super(HttpStatus.NOT_FOUND, systemMessages);
     }
 
 }
