@@ -24,6 +24,11 @@ public class ClientFacade implements ClientOperation {
     }
 
     @Override
+    public Mono<Void> deleteById(String id) {
+        return clientRepository.deleteById(id);
+    }
+
+    @Override
     public Mono<Client> findById(String id) {
         return clientRepository.findById(id);
     }

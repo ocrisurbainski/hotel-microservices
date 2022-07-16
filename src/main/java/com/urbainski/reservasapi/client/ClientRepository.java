@@ -7,6 +7,8 @@ public interface ClientRepository {
 
     Mono<Client> save(Client client);
 
+    Mono<Void> deleteById(String id);
+
     Mono<Client> findById(String id);
 
     Flux<Client> findAll();

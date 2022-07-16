@@ -45,6 +45,15 @@ public class ClientMongoRepository implements ClientRepository {
     }
 
     @Override
+    public Mono<Void> deleteById(String id) {
+        return clientSpringRepository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CLIENT_NOT_FOUND))))
+                .then(clientSpringRepository.deleteById(id))
+                .doOnSuccess(value -> log.debug("Success when deleting customer, id: {}", id))
+                .doOnError(throwable -> log.error("Error deleting customer, id: {}", id, throwable));
+    }
+
+    @Override
     public Mono<Client> findById(String id) {
         return this.clientSpringRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CLIENT_NOT_FOUND))))

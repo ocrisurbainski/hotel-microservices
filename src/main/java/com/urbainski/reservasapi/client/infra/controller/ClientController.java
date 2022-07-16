@@ -13,6 +13,8 @@ public interface ClientController {
 
     Mono<ResponseEntity<CreateClientResponseDTO>> save(Mono<CreateClientRequestDTO> dto, UriComponentsBuilder componentsBuilder);
 
+    Mono<ResponseEntity<Void>> deleteById(String id);
+
     Mono<ResponseEntity<GetClientByIdResponseDTO>> findById(String id);
 
     Flux<GetAllClientResponseDTO> findAll();

@@ -45,6 +45,12 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> deleteById(@PathVariable String id) {
+        return clientOperation.deleteById(id).map(ResponseEntity::ok).log();
+    }
+
+    @Override
     @GetMapping("/{id}")
     public Mono<ResponseEntity<GetClientByIdResponseDTO>> findById(@PathVariable String id) {
         return clientOperation.findById(id)
