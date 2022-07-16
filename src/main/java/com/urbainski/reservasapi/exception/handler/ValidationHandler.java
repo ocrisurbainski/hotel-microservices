@@ -4,6 +4,7 @@ import com.urbainski.reservasapi.exception.AbstractGenericException;
 import com.urbainski.reservasapi.exception.handler.dto.ErrorDTO;
 import com.urbainski.reservasapi.exception.handler.dto.ErrorFieldDTO;
 import com.urbainski.reservasapi.exception.handler.dto.ResponseErrorDTO;
+import com.urbainski.reservasapi.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
@@ -57,7 +58,7 @@ public class ValidationHandler {
                 .collect(Collectors.toList());
         var responseError = ResponseErrorDTO.builder()
                 .code(HttpStatus.BAD_REQUEST)
-                .message(messageSource.getMessage("msg.validation.failed", null, Locale.getDefault()))
+                .message(messageSource.getMessage(SystemMessages.VALIDATION_FAILED.getKey(), null, Locale.getDefault()))
                 .details(errors)
                 .build();
         return ResponseEntity.badRequest().body(responseError);
@@ -93,7 +94,7 @@ public class ValidationHandler {
         var errorDto = field.isEmpty() ? new ErrorDTO(message) : new ErrorFieldDTO(field, message);
         var responseError = ResponseErrorDTO.builder()
                 .code(HttpStatus.CONFLICT)
-                .message(messageSource.getMessage("msg.duplication.key", null, Locale.getDefault()))
+                .message(messageSource.getMessage(SystemMessages.DATA_DUPLICATION.getKey(), null, Locale.getDefault()))
                 .details(List.of(errorDto))
                 .build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(responseError);
