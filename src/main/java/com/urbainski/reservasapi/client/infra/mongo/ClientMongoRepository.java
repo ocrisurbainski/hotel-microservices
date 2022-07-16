@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static com.urbainski.reservasapi.commons.message.SystemMessages.CLIENT_NOT_FOUND;
@@ -50,6 +51,11 @@ public class ClientMongoRepository implements ClientRepository {
                 .map(mapper::toClient)
                 .doOnError(throwable -> log.error("Error in method ::findById::", throwable.getCause()))
                 .doOnSuccess(value -> log.debug("Success in method ::findById:: {}", value));
+    }
+
+    @Override
+    public Flux<Client> findAll() {
+        return this.clientSpringRepository.findAll().map(mapper::toClient);
     }
 
     private void onErrorInsert(Throwable throwable, Client client) {
