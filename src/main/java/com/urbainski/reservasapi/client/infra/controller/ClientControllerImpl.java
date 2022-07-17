@@ -1,10 +1,7 @@
 package com.urbainski.reservasapi.client.infra.controller;
 
 import com.urbainski.reservasapi.client.ClientOperation;
-import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientRequestDTO;
-import com.urbainski.reservasapi.client.infra.controller.dto.CreateClientResponseDTO;
-import com.urbainski.reservasapi.client.infra.controller.dto.GetAllClientResponseDTO;
-import com.urbainski.reservasapi.client.infra.controller.dto.GetClientByIdResponseDTO;
+import com.urbainski.reservasapi.client.infra.controller.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +53,14 @@ public class ClientControllerImpl implements ClientController {
         return clientOperation.findById(id)
                 .map(mapper::toGetClientByIdResponseDTO)
                 .map(ResponseEntity::ok)
+                .log();
+    }
+
+    @Override
+    @GetMapping(value = "/name/{name}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GetClientByNameResponseDTO> findByName(@PathVariable String name) {
+        return clientOperation.findByName(name)
+                .map(mapper::toGetClientByNameResponseDTO)
                 .log();
     }
 

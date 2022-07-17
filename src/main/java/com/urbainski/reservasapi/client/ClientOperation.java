@@ -11,6 +11,7 @@ public interface ClientOperation {
 
     Mono<Client> findById(String id);
 
-    Flux<Client> findAll();
+    Flux<Client> findByName(String name);
 
+    Flux<Client> findAll();
 }
