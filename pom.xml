@@ -16,7 +16,7 @@
 	<artifactId>reservas-api</artifactId>
 	<version>2.0.0</version>
 	<name>reservas-api</name>
-	<description>Projeto para registros de hóspedes, reservas, checkins e checkouts, e calculo de diárias e custo de estacionamento de um hotel.</description>
+	<description>Project for guest registration, reservations, check-ins, checkouts, and calculation of hotel rates and parking costs.</description>
 
 	<properties>
 		<java.version>11</java.version>
