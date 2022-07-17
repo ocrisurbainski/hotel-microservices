@@ -16,6 +16,8 @@ public interface ClientController {
 
     Mono<ResponseEntity<GetClientByDocumentResponseDTO>> findByDocument(String document);
 
+    Flux<GetClientByTelephoneResponseDTO> findByTelephone(String telephone);
+
     Flux<GetClientByNameResponseDTO> findByName(String name);
 
     Flux<GetAllClientResponseDTO> findAll();

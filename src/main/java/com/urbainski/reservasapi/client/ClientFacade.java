@@ -39,6 +39,11 @@ public class ClientFacade implements ClientOperation {
     }
 
     @Override
+    public Flux<Client> findByTelephone(String telephone) {
+        return clientRepository.findByTelephone(telephone);
+    }
+
+    @Override
     public Flux<Client> findByName(String name) {
         return clientRepository.findByName(name);
     }

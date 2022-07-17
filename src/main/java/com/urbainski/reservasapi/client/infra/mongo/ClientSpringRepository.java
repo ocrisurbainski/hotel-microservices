@@ -10,6 +10,8 @@ public interface ClientSpringRepository extends ReactiveMongoRepository<ClientDo
 
     Mono<ClientDocument> findByDocumentEquals(String document);
 
+    Flux<ClientDocument> findByTelephoneEquals(String telephone);
+
     Flux<ClientDocument> findByNameContainingIgnoreCase(String name);
 
 }

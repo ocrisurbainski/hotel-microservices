@@ -13,6 +13,8 @@ public interface ClientRepository {
 
     Mono<Client> findByDocument(String document);
 
+    Flux<Client> findByTelephone(String telephone);
+
     Flux<Client> findByName(String name);
 
     Flux<Client> findAll();

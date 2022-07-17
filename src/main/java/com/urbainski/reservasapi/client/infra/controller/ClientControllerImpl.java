@@ -66,6 +66,14 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
+    @GetMapping(value = "/telephone/{telephone}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GetClientByTelephoneResponseDTO> findByTelephone(@PathVariable String telephone) {
+        return clientOperation.findByTelephone(telephone)
+                .map(mapper::toGetClientByTelephoneResponseDTO)
+                .log();
+    }
+
+    @Override
     @GetMapping(value = "/name/{name}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<GetClientByNameResponseDTO> findByName(@PathVariable String name) {
         return clientOperation.findByName(name)

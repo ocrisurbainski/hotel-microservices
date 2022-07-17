@@ -72,6 +72,11 @@ public class ClientMongoRepository implements ClientRepository {
     }
 
     @Override
+    public Flux<Client> findByTelephone(String telephone) {
+        return this.clientSpringRepository.findByTelephoneEquals(telephone).map(mapper::toClient);
+    }
+
+    @Override
     public Flux<Client> findByName(String name) {
         return this.clientSpringRepository.findByNameContainingIgnoreCase(name).map(mapper::toClient);
     }
