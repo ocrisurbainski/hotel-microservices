@@ -63,6 +63,15 @@ public class ClientMongoRepository implements ClientRepository {
     }
 
     @Override
+    public Mono<Client> findByDocument(String document) {
+        return this.clientSpringRepository.findByDocumentEquals(document)
+                .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CLIENT_NOT_FOUND))))
+                .map(mapper::toClient)
+                .doOnError(throwable -> log.error("Error in method ::findByDocument::", throwable.getCause()))
+                .doOnSuccess(value -> log.debug("Success in method ::findByDocument:: {}", value));
+    }
+
+    @Override
     public Flux<Client> findByName(String name) {
         return this.clientSpringRepository.findByNameContainingIgnoreCase(name).map(mapper::toClient);
     }

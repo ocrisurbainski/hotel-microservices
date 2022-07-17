@@ -57,6 +57,15 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
+    @GetMapping("/document/{document}")
+    public Mono<ResponseEntity<GetClientByDocumentResponseDTO>> findByDocument(@PathVariable String document) {
+        return clientOperation.findByDocument(document)
+                .map(mapper::toGetClientByDocumentResponseDTO)
+                .map(ResponseEntity::ok)
+                .log();
+    }
+
+    @Override
     @GetMapping(value = "/name/{name}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<GetClientByNameResponseDTO> findByName(@PathVariable String name) {
         return clientOperation.findByName(name)

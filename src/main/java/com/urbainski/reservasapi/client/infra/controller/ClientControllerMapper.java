@@ -12,6 +12,8 @@ public interface ClientControllerMapper {
 
     GetClientByIdResponseDTO toGetClientByIdResponseDTO(Client client);
 
+    GetClientByDocumentResponseDTO toGetClientByDocumentResponseDTO(Client client);
+
     GetClientByNameResponseDTO toGetClientByNameResponseDTO(Client client);
 
     GetAllClientResponseDTO toGetAllClientResponseDTO(Client client);

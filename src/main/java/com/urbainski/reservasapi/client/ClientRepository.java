@@ -11,6 +11,8 @@ public interface ClientRepository {
 
     Mono<Client> findById(String id);
 
+    Mono<Client> findByDocument(String document);
+
     Flux<Client> findByName(String name);
 
     Flux<Client> findAll();

@@ -34,6 +34,11 @@ public class ClientFacade implements ClientOperation {
     }
 
     @Override
+    public Mono<Client> findByDocument(String document) {
+        return clientRepository.findByDocument(document);
+    }
+
+    @Override
     public Flux<Client> findByName(String name) {
         return clientRepository.findByName(name);
     }
