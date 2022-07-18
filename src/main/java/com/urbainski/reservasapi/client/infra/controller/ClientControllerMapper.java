@@ -10,6 +10,10 @@ public interface ClientControllerMapper {
 
     CreateClientResponseDTO toCreateClientResponseDTO(Client client);
 
+    Client toClient(UpdateClientRequestDTO dto);
+
+    UpdateClientResponseDTO toUpdateClientResponseDTO(Client client);
+
     GetClientByIdResponseDTO toGetClientByIdResponseDTO(Client client);
 
     GetClientByDocumentResponseDTO toGetClientByDocumentResponseDTO(Client client);

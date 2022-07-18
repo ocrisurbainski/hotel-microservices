@@ -23,12 +23,19 @@ public interface ClientController {
     })
     Mono<ResponseEntity<CreateClientResponseDTO>> save(Mono<CreateClientRequestDTO> dto, UriComponentsBuilder componentsBuilder);
 
+    @Operation(operationId = "update", description = "Update the client")
+    @ApiResponse(responseCode = "200", description = "When the client is succesfull updated")
+    @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    Mono<ResponseEntity<UpdateClientResponseDTO>> update(Mono<UpdateClientRequestDTO> dto, @Parameter(description = "Identifier of client") String id);
+
     @Operation(operationId = "deleteById", description = "Delete a client by their identifier")
     @ApiResponse(responseCode = "200", description = "When the client is succesfull deleted")
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
-    @ApiResponse(responseCode = "404", description = "When there is no customer with the given identifier", content = {
+    @ApiResponse(responseCode = "404", description = "When there is no client with the given identifier", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     Mono<ResponseEntity<Void>> deleteById(@Parameter(description = "Identifier of client") String id);
@@ -38,7 +45,7 @@ public interface ClientController {
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
-    @ApiResponse(responseCode = "404", description = "When there is no customer with the given identifier", content = {
+    @ApiResponse(responseCode = "404", description = "When there is no client with the given identifier", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     Mono<ResponseEntity<GetClientByIdResponseDTO>> findById(@Parameter(description = "Identifier of client") String id);
@@ -48,7 +55,7 @@ public interface ClientController {
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
-    @ApiResponse(responseCode = "404", description = "When there is no customer with the given identifier", content = {
+    @ApiResponse(responseCode = "404", description = "When there is no client with the given identifier", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     Mono<ResponseEntity<GetClientByDocumentResponseDTO>> findByDocument(@Parameter(description = "Number document of client") String document);

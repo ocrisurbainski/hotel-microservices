@@ -40,8 +40,18 @@ public class ClientMongoRepository implements ClientRepository {
                 .map(mapper::toClientDocument)
                 .flatMap(clientSpringRepository::save)
                 .map(mapper::toClient)
-                .doOnSuccess(value -> log.debug("Success when registering a new customer, id: {}", value.getId()))
+                .doOnSuccess(value -> log.debug("Success when registering a new client, id: {}", value.getId()))
                 .doOnError(throwable -> onErrorInsert(throwable, client));
+    }
+
+    @Override
+    public Mono<Client> update(Client client) {
+        return Mono.just(client)
+                .map(mapper::toClientDocument)
+                .flatMap(clientSpringRepository::save)
+                .map(mapper::toClient)
+                .doOnSuccess(value -> log.debug("Success in updating the client, id: {}", value.getId()))
+                .doOnError(throwable -> onErrorUpdate(throwable, client));
     }
 
     @Override
@@ -49,8 +59,8 @@ public class ClientMongoRepository implements ClientRepository {
         return clientSpringRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CLIENT_NOT_FOUND))))
                 .then(clientSpringRepository.deleteById(id))
-                .doOnSuccess(value -> log.debug("Success when deleting customer, id: {}", id))
-                .doOnError(throwable -> log.error("Error deleting customer, id: {}", id, throwable));
+                .doOnSuccess(value -> log.debug("Success when deleting client, id: {}", id))
+                .doOnError(throwable -> log.error("Error deleting client, id: {}", id, throwable));
     }
 
     @Override
@@ -87,7 +97,13 @@ public class ClientMongoRepository implements ClientRepository {
     }
 
     private void onErrorInsert(Throwable throwable, Client client) {
-        var logMessage = "Error registering new customer: {}, cause: {}";
+        var logMessage = "Error registering new client: {}, cause: {}";
+        var json = ToStringBuilder.reflectionToString(client, ToStringStyle.JSON_STYLE);
+        log.error(logMessage, json, throwable.getMessage());
+    }
+
+    private void onErrorUpdate(Throwable throwable, Client client) {
+        var logMessage = "Error updating client: {}, cause: {}";
         var json = ToStringBuilder.reflectionToString(client, ToStringStyle.JSON_STYLE);
         log.error(logMessage, json, throwable.getMessage());
     }

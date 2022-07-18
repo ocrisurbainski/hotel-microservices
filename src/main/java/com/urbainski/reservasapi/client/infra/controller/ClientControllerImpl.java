@@ -42,6 +42,17 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
+    @PutMapping("/{id}")
+    public Mono<ResponseEntity<UpdateClientResponseDTO>> update(@RequestBody @Valid Mono<UpdateClientRequestDTO> dto, @PathVariable String id) {
+        return dto.map(mapper::toClient)
+                .doOnNext(value -> value.setId(id))
+                .flatMap(clientOperation::update)
+                .map(mapper::toUpdateClientResponseDTO)
+                .map(ResponseEntity::ok)
+                .log();
+    }
+
+    @Override
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteById(@PathVariable String id) {
         return clientOperation.deleteById(id).map(ResponseEntity::ok).log();
