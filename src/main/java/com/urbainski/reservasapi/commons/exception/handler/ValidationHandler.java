@@ -4,9 +4,9 @@ import com.urbainski.reservasapi.commons.exception.AbstractGenericException;
 import com.urbainski.reservasapi.commons.exception.handler.dto.ErrorDTO;
 import com.urbainski.reservasapi.commons.exception.handler.dto.ErrorFieldDTO;
 import com.urbainski.reservasapi.commons.exception.handler.dto.ResponseErrorDTO;
+import com.urbainski.reservasapi.commons.message.MessageSourceWrapperComponent;
 import com.urbainski.reservasapi.commons.message.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -25,10 +24,10 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ValidationHandler {
 
-    private final MessageSource messageSource;
+    private final MessageSourceWrapperComponent messageSourceWrapperComponent;
 
-    public ValidationHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
+    public ValidationHandler(MessageSourceWrapperComponent messageSourceWrapperComponent) {
+        this.messageSourceWrapperComponent = messageSourceWrapperComponent;
     }
 
     @ExceptionHandler(AbstractGenericException.class)
@@ -52,7 +51,7 @@ public class ValidationHandler {
                 .collect(Collectors.toList());
         var responseError = ResponseErrorDTO.builder()
                 .code(HttpStatus.BAD_REQUEST)
-                .message(messageSource.getMessage(SystemMessages.VALIDATION_FAILED.getKey(), null, Locale.getDefault()))
+                .message(messageSourceWrapperComponent.getMessage(SystemMessages.VALIDATION_FAILED))
                 .details(errors)
                 .build();
         return ResponseEntity.badRequest().body(responseError);
@@ -88,7 +87,7 @@ public class ValidationHandler {
         var errorDto = field.isEmpty() ? new ErrorDTO(message) : new ErrorFieldDTO(field, message);
         var responseError = ResponseErrorDTO.builder()
                 .code(HttpStatus.CONFLICT)
-                .message(messageSource.getMessage(SystemMessages.DATA_DUPLICATION.getKey(), null, Locale.getDefault()))
+                .message(messageSourceWrapperComponent.getMessage(SystemMessages.DATA_DUPLICATION))
                 .details(List.of(errorDto))
                 .build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(responseError);
