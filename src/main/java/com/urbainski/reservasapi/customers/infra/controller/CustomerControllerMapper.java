@@ -1,6 +1,6 @@
 package com.urbainski.reservasapi.customers.infra.controller;
 
-import com.urbainski.reservasapi.customers.Customer;
+import com.urbainski.reservasapi.customers.domain.Customer;
 import com.urbainski.reservasapi.customers.infra.controller.dto.*;
 
 @org.mapstruct.Mapper(componentModel = "spring")

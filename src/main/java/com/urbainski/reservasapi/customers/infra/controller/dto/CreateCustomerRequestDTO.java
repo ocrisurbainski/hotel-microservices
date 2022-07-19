@@ -3,7 +3,7 @@ package com.urbainski.reservasapi.customers.infra.controller.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.urbainski.reservasapi.commons.bean.validation.group.CNPJGroup;
 import com.urbainski.reservasapi.commons.bean.validation.group.CPFGroup;
-import com.urbainski.reservasapi.customers.CustomerType;
+import com.urbainski.reservasapi.customers.domain.CustomerType;
 import com.urbainski.reservasapi.customers.infra.controller.dto.validation.provider.CreateCustomerGroupSequenceProvider;
 import lombok.Getter;
 import lombok.Setter;

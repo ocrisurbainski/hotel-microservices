@@ -1,6 +1,6 @@
 package com.urbainski.reservasapi.customers.infra.mongo;
 
-import com.urbainski.reservasapi.customers.CustomerType;
+import com.urbainski.reservasapi.customers.domain.CustomerType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;

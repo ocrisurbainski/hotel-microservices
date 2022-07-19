@@ -1,5 +1,6 @@
 package com.urbainski.reservasapi.customers;
 
+import com.urbainski.reservasapi.customers.domain.Customer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

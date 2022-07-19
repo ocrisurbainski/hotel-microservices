@@ -1,6 +1,6 @@
 package com.urbainski.reservasapi.customers.infra.controller.dto.validation.provider;
 
-import com.urbainski.reservasapi.customers.CustomerType;
+import com.urbainski.reservasapi.customers.domain.CustomerType;
 import com.urbainski.reservasapi.customers.infra.controller.dto.UpdateCustomerRequestDTO;
 import com.urbainski.reservasapi.commons.bean.validation.group.CNPJGroup;
 import com.urbainski.reservasapi.commons.bean.validation.group.CPFGroup;

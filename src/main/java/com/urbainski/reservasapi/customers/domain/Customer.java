@@ -1,4 +1,4 @@
-package com.urbainski.reservasapi.customers;
+package com.urbainski.reservasapi.customers.domain;
 
 import lombok.Getter;
 import lombok.Setter;

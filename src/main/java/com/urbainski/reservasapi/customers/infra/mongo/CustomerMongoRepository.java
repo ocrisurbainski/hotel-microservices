@@ -2,7 +2,7 @@ package com.urbainski.reservasapi.customers.infra.mongo;
 
 import com.urbainski.reservasapi.commons.exception.NotFoundException;
 import com.urbainski.reservasapi.commons.message.MessageSourceWrapperComponent;
-import com.urbainski.reservasapi.customers.Customer;
+import com.urbainski.reservasapi.customers.domain.Customer;
 import com.urbainski.reservasapi.customers.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
