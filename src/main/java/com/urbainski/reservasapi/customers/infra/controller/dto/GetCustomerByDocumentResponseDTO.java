@@ -1,7 +1,7 @@
-package com.urbainski.reservasapi.client.infra.controller.dto;
+package com.urbainski.reservasapi.customers.infra.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.urbainski.reservasapi.client.ClientType;
+import com.urbainski.reservasapi.customers.CustomerType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,15 +11,14 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CreateClientResponseDTO {
-
+public class GetCustomerByDocumentResponseDTO {
     private String id;
     private String name;
     private String document;
     private String telephone;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-    private ClientType type;
+    private CustomerType type;
 
     @Override
     public String toString() {

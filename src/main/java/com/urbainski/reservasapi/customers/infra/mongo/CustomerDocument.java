@@ -1,6 +1,6 @@
-package com.urbainski.reservasapi.client.infra.mongo;
+package com.urbainski.reservasapi.customers.infra.mongo;
 
-import com.urbainski.reservasapi.client.ClientType;
+import com.urbainski.reservasapi.customers.CustomerType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,16 +15,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Document("clients")
-public class ClientDocument {
+@Document("customers")
+public class CustomerDocument {
 
     private String id;
     private String name;
-    @Indexed(name = "idx_clientes_document_unique", unique = true)
+    @Indexed(name = "idx_customers_document_unique", unique = true)
     private String document;
     private String telephone;
     private LocalDate birthDate;
-    private ClientType type;
+    private CustomerType type;
     @CreatedDate
     private LocalDateTime createdDate;
     @LastModifiedDate

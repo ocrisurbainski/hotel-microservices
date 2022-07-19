@@ -1,10 +1,10 @@
-package com.urbainski.reservasapi.client.infra.controller.dto;
+package com.urbainski.reservasapi.customers.infra.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.urbainski.reservasapi.customers.CustomerType;
+import com.urbainski.reservasapi.customers.infra.controller.dto.validation.provider.UpdateCustomerGroupSequenceProvider;
 import com.urbainski.reservasapi.commons.bean.validation.group.CNPJGroup;
 import com.urbainski.reservasapi.commons.bean.validation.group.CPFGroup;
-import com.urbainski.reservasapi.client.ClientType;
-import com.urbainski.reservasapi.client.infra.controller.dto.validation.provider.CreateClientGroupSequenceProvider;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -20,8 +20,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@GroupSequenceProvider(value = CreateClientGroupSequenceProvider.class)
-public class CreateClientRequestDTO {
+@GroupSequenceProvider(value = UpdateCustomerGroupSequenceProvider.class)
+public class UpdateCustomerRequestDTO {
 
     @NotNull
     @Size(min = 10, max = 500)
@@ -35,7 +35,7 @@ public class CreateClientRequestDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     @NotNull
-    private ClientType type;
+    private CustomerType type;
 
     @Override
     public String toString() {
