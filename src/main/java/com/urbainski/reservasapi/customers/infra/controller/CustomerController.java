@@ -28,6 +28,9 @@ public interface CustomerController {
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
+    @ApiResponse(responseCode = "404", description = "When there is no customer with the given identifier", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
     Mono<ResponseEntity<UpdateCustomerResponseDTO>> update(Mono<UpdateCustomerRequestDTO> dto, @Parameter(description = "Identifier of customer") String id);
 
     @Operation(operationId = "deleteById", description = "Delete a customer by their identifier")

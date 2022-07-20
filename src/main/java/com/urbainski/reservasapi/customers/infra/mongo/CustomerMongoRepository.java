@@ -46,7 +46,9 @@ public class CustomerMongoRepository implements CustomerRepository {
 
     @Override
     public Mono<Customer> update(Customer customer) {
-        return Mono.just(customer)
+        return customerSpringRepository.findById(customer.getId())
+                .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CUSTOMER_NOT_FOUND))))
+                .map(customerDocument -> customer)
                 .map(mapper::toCustomerDocument)
                 .flatMap(customerSpringRepository::save)
                 .map(mapper::toCustomer)
