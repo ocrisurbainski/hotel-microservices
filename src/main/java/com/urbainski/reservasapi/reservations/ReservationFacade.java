@@ -1,7 +1,6 @@
 package com.urbainski.reservasapi.reservations;
 
 import com.urbainski.reservasapi.commons.message.MessageSourceWrapperComponent;
-import com.urbainski.reservasapi.commons.message.SystemMessages;
 import com.urbainski.reservasapi.reservations.domain.Reservation;
 import com.urbainski.reservasapi.reservations.exception.ReservationStatusException;
 import org.springframework.stereotype.Service;
@@ -37,4 +36,8 @@ public class ReservationFacade implements ReservationOperation {
                 .flatMap(value -> value);
     }
 
+    @Override
+    public Mono<Reservation> findById(String id) {
+        return repository.findById(id);
+    }
 }

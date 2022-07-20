@@ -1,5 +1,7 @@
 package com.urbainski.reservasapi.reservations.infra.mongo;
 
+import com.urbainski.reservasapi.commons.exception.NotFoundException;
+import com.urbainski.reservasapi.commons.message.MessageSourceWrapperComponent;
 import com.urbainski.reservasapi.reservations.ReservationRepository;
 import com.urbainski.reservasapi.reservations.domain.Reservation;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
+import static com.urbainski.reservasapi.commons.message.SystemMessages.RESERVATION_NOT_FOUND;
 
 @Slf4j
 @Component
@@ -18,9 +20,15 @@ public class ReservationMongoRepository implements ReservationRepository {
 
     private final ReservationMongoMapper mapper;
 
-    public ReservationMongoRepository(ReservationSpringRepository reservationSpringRepository, ReservationMongoMapper mapper) {
+    private final MessageSourceWrapperComponent messageSourceWrapperComponent;
+
+    public ReservationMongoRepository(
+            ReservationSpringRepository reservationSpringRepository,
+            ReservationMongoMapper mapper,
+            MessageSourceWrapperComponent messageSourceWrapperComponent) {
         this.reservationSpringRepository = reservationSpringRepository;
         this.mapper = mapper;
+        this.messageSourceWrapperComponent = messageSourceWrapperComponent;
     }
 
     @Override
@@ -31,6 +39,15 @@ public class ReservationMongoRepository implements ReservationRepository {
                 .map(mapper::toReservation)
                 .doOnSuccess(value -> log.debug("Success when registering a new reservation, id: {}", value.getId()))
                 .doOnError(throwable -> onErrorInsert(throwable, reservation));
+    }
+
+    @Override
+    public Mono<Reservation> findById(String id) {
+        return reservationSpringRepository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(RESERVATION_NOT_FOUND))))
+                .map(mapper::toReservation)
+                .doOnError(throwable -> log.error("Error in method ::findById::", throwable.getCause()))
+                .doOnSuccess(value -> log.debug("Success in method ::findById:: {}", value));
     }
 
     private void onErrorInsert(Throwable throwable, Reservation reservation) {

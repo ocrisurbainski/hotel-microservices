@@ -4,12 +4,10 @@ import com.urbainski.reservasapi.reservations.ReservationOperation;
 import com.urbainski.reservasapi.reservations.domain.ReservationStatus;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationRequestDTO;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationResponseDTO;
+import com.urbainski.reservasapi.reservations.infra.controller.dto.GetReservationByIdResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
@@ -40,4 +38,12 @@ public class ReservationControllerImpl implements ReservationController {
                 .log();
     }
 
+    @Override
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<GetReservationByIdResponseDTO>> findById(@PathVariable String id) {
+        return operation.findById(id)
+                .map(mapper::toGetReservationByIdResponseDTO)
+                .map(ResponseEntity::ok)
+                .log();
+    }
 }
