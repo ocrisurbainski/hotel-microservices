@@ -34,7 +34,10 @@ public class ReservationControllerImpl implements ReservationController {
                 .doOnNext(value -> value.setStatus(ReservationStatus.RESERVED))
                 .flatMap(operation::save)
                 .map(mapper::toCreateReservationResponseDTO)
-                .map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value))
+                .map(value -> {
+                    var uri = uriComponentsBuilder.path("/reservations/{id}").buildAndExpand(value.getId()).toUri();
+                    return ResponseEntity.created(uri).body(value);
+                })
                 .log();
     }
 
@@ -46,4 +49,5 @@ public class ReservationControllerImpl implements ReservationController {
                 .map(ResponseEntity::ok)
                 .log();
     }
+
 }
