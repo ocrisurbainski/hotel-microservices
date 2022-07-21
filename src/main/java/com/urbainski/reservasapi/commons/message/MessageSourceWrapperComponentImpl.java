@@ -17,7 +17,12 @@ public class MessageSourceWrapperComponentImpl implements MessageSourceWrapperCo
 
     @Override
     public String getMessage(SystemMessages systemMessages) {
-        return messageSource.getMessage(systemMessages.getKey(), null, Locale.getDefault());
+        return getMessage(systemMessages, new Object[]{});
+    }
+
+    @Override
+    public String getMessage(SystemMessages systemMessages, Object[] args) {
+        return messageSource.getMessage(systemMessages.getKey(), args, Locale.getDefault());
     }
 
 }

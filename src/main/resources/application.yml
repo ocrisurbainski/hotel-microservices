@@ -24,3 +24,7 @@ info:
     name: ^project.name^
     description: ^project.description^
     version: ^project.version^
+
+reservation:
+  checkin:
+    hour-init: "12:00"

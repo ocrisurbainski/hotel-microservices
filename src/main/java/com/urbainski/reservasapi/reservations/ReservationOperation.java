@@ -9,6 +9,8 @@ public interface ReservationOperation {
 
     Mono<Reservation> cancel(String id);
 
+    Mono<Reservation> checkin(String id);
+
     Mono<Reservation> findById(String id);
 
 }

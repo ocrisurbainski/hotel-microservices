@@ -11,6 +11,8 @@ public interface ReservationRepository {
 
     Mono<Reservation> cancel(Reservation reservation);
 
+    Mono<Reservation> checkin(Reservation reservation);
+
     Mono<Reservation> findById(String id);
 
 }

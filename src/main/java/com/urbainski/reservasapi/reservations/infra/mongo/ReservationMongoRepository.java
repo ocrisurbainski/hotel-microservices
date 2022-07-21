@@ -57,6 +57,11 @@ public class ReservationMongoRepository implements ReservationRepository {
     }
 
     @Override
+    public Mono<Reservation> checkin(Reservation reservation) {
+        return update(reservation);
+    }
+
+    @Override
     public Mono<Reservation> findById(String id) {
         return reservationSpringRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(RESERVATION_NOT_FOUND))))
