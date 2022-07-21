@@ -7,6 +7,8 @@ public interface ReservationOperation {
 
     Mono<Reservation> save(Reservation reservation);
 
+    Mono<Reservation> cancel(String id);
+
     Mono<Reservation> findById(String id);
 
 }

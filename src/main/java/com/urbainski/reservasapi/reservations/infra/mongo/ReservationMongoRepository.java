@@ -42,6 +42,21 @@ public class ReservationMongoRepository implements ReservationRepository {
     }
 
     @Override
+    public Mono<Reservation> update(Reservation reservation) {
+        return Mono.just(reservation)
+                .map(mapper::toReservationDocument)
+                .flatMap(reservationSpringRepository::save)
+                .map(mapper::toReservation)
+                .doOnSuccess(value -> log.debug("Success when updating a reservation, id: {}", value.getId()))
+                .doOnError(throwable -> onErrorUpdate(throwable, reservation));
+    }
+
+    @Override
+    public Mono<Reservation> cancel(Reservation reservation) {
+        return update(reservation);
+    }
+
+    @Override
     public Mono<Reservation> findById(String id) {
         return reservationSpringRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(RESERVATION_NOT_FOUND))))
@@ -52,6 +67,12 @@ public class ReservationMongoRepository implements ReservationRepository {
 
     private void onErrorInsert(Throwable throwable, Reservation reservation) {
         var logMessage = "Error registering new reservation: {}, cause: {}";
+        var json = ToStringBuilder.reflectionToString(reservation, ToStringStyle.JSON_STYLE);
+        log.error(logMessage, json, throwable.getMessage());
+    }
+
+    private void onErrorUpdate(Throwable throwable, Reservation reservation) {
+        var logMessage = "Error updating reservation: {}, cause: {}";
         var json = ToStringBuilder.reflectionToString(reservation, ToStringStyle.JSON_STYLE);
         log.error(logMessage, json, throwable.getMessage());
     }

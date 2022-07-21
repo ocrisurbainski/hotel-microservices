@@ -7,6 +7,10 @@ public interface ReservationRepository {
 
     Mono<Reservation> save(Reservation reservation);
 
+    Mono<Reservation> update(Reservation reservation);
+
+    Mono<Reservation> cancel(Reservation reservation);
+
     Mono<Reservation> findById(String id);
 
 }
