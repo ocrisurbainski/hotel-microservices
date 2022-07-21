@@ -1,6 +1,7 @@
 package com.urbainski.reservasapi.reservations;
 
 import com.urbainski.reservasapi.reservations.domain.Reservation;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ReservationOperation {
@@ -12,5 +13,7 @@ public interface ReservationOperation {
     Mono<Reservation> checkin(String id);
 
     Mono<Reservation> findById(String id);
+
+    Flux<Reservation> findAll();
 
 }

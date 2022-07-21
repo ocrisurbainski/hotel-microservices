@@ -7,6 +7,7 @@ import com.urbainski.reservasapi.reservations.domain.ReservationStatus;
 import com.urbainski.reservasapi.reservations.exception.ReservationCheckinException;
 import com.urbainski.reservasapi.reservations.exception.ReservationStatusException;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -64,6 +65,11 @@ public class ReservationFacade implements ReservationOperation {
     @Override
     public Mono<Reservation> findById(String id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public Flux<Reservation> findAll() {
+        return repository.findAll();
     }
 
     private Reservation validateCancelAction(Reservation reservation) {

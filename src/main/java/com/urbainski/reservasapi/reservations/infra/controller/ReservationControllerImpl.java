@@ -3,10 +3,13 @@ package com.urbainski.reservasapi.reservations.infra.controller;
 import com.urbainski.reservasapi.reservations.ReservationOperation;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationRequestDTO;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationResponseDTO;
+import com.urbainski.reservasapi.reservations.infra.controller.dto.GetAllReservationResponseDTO;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.GetReservationByIdResponseDTO;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -60,6 +63,14 @@ public class ReservationControllerImpl implements ReservationController {
         return operation.findById(id)
                 .map(mapper::toGetReservationByIdResponseDTO)
                 .map(ResponseEntity::ok)
+                .log();
+    }
+
+    @Override
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GetAllReservationResponseDTO> findAll() {
+        return operation.findAll()
+                .map(mapper::toGetAllReservationResponseDTO)
                 .log();
     }
 

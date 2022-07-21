@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static com.urbainski.reservasapi.commons.message.SystemMessages.RESERVATION_NOT_FOUND;
@@ -68,6 +69,11 @@ public class ReservationMongoRepository implements ReservationRepository {
                 .map(mapper::toReservation)
                 .doOnError(throwable -> log.error("Error in method ::findById::", throwable.getCause()))
                 .doOnSuccess(value -> log.debug("Success in method ::findById:: {}", value));
+    }
+
+    @Override
+    public Flux<Reservation> findAll() {
+        return reservationSpringRepository.findAll().map(mapper::toReservation);
     }
 
     private void onErrorInsert(Throwable throwable, Reservation reservation) {

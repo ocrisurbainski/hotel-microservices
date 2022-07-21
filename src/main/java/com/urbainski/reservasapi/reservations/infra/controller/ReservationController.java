@@ -3,6 +3,7 @@ package com.urbainski.reservasapi.reservations.infra.controller;
 import com.urbainski.reservasapi.commons.exception.handler.dto.ResponseErrorDTO;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationRequestDTO;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationResponseDTO;
+import com.urbainski.reservasapi.reservations.infra.controller.dto.GetAllReservationResponseDTO;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.GetReservationByIdResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Tag(name = "Reservations operations")
@@ -59,5 +61,9 @@ public interface ReservationController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     Mono<ResponseEntity<GetReservationByIdResponseDTO>> findById(@Parameter(description = "Identifier of reservation") String id);
+
+    @Operation(operationId = "findAll", description = "Find all reservations")
+    @ApiResponse(responseCode = "200", description = "When the search is successful")
+    Flux<GetAllReservationResponseDTO> findAll();
 
 }
