@@ -5,6 +5,8 @@ server:
     context-path: /
 
 spring:
+  main:
+    banner-mode: off
   data:
     mongodb:
       uri: mongodb://${RESERVAS_API_USER:reservas-api-user}:${RESERVAS_API_PASSWORD:reservas-api-pass}@${RESERVAS_API_DB_HOST:localhost}:${RESERVAS_API_DB_PORT:27017}/${RESERVAS_API_DB_NAME:reservas_api_db}
