@@ -8,6 +8,8 @@ public interface ReservationOperation {
 
     Mono<Reservation> save(Reservation reservation);
 
+    Mono<Reservation> update(Reservation reservation);
+
     Mono<Reservation> cancel(String id);
 
     Mono<Reservation> checkin(String id);

@@ -39,8 +39,19 @@ public class ReservationFacade implements ReservationOperation {
         return Mono.just(reservation)
                 .map(this::validateSaveAction)
                 .doOnNext(value -> value.setStatus(ReservationStatus.RESERVED))
-                .map(repository::save)
-                .flatMap(value -> value);
+                .flatMap(repository::save);
+    }
+
+    @Override
+    public Mono<Reservation> update(Reservation reservation) {
+        return repository.findById(reservation.getId())
+                .map(value -> {
+                    reservation.setStatus(value.getStatus());
+                    return reservation;
+                })
+                .map(this::validateUpdateAction)
+                .flatMap(repository::update);
+
     }
 
     @Override
@@ -48,8 +59,7 @@ public class ReservationFacade implements ReservationOperation {
         return repository.findById(id)
                 .map(this::validateCancelAction)
                 .doOnNext(value -> value.setStatus(ReservationStatus.CANCELED))
-                .map(repository::cancel)
-                .flatMap(value -> value);
+                .flatMap(repository::cancel);
     }
 
     @Override
@@ -60,8 +70,7 @@ public class ReservationFacade implements ReservationOperation {
                     value.setStatus(ReservationStatus.CHECKIN);
                     value.setDateCheckin(LocalDateTime.now());
                 })
-                .map(repository::checkin)
-                .flatMap(value -> value);
+                .flatMap(repository::checkin);
     }
 
     @Override
@@ -97,17 +106,7 @@ public class ReservationFacade implements ReservationOperation {
     }
 
     private Reservation validateCheckinAction(Reservation reservation) {
-        switch (reservation.getStatus()) {
-            case CANCELED:
-                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
-                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CANCELED));
-            case CHECKIN:
-                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
-                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CHECKIN));
-            case CHECKOUT:
-                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
-                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CHECKOUT));
-        }
+        validateReservationStatusIsReserved(reservation);
 
         var dateNow = LocalDate.now();
         if (dateNow.isBefore(reservation.getDateReservationInitial())) {
@@ -122,6 +121,26 @@ public class ReservationFacade implements ReservationOperation {
         }
 
         return reservation;
+    }
+
+    private Reservation validateUpdateAction(Reservation reservation) {
+
+        validateReservationStatusIsReserved(reservation);
+        return validateSaveAction(reservation);
+    }
+
+    private void validateReservationStatusIsReserved(Reservation reservation) {
+        switch (reservation.getStatus()) {
+            case CANCELED:
+                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
+                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CANCELED));
+            case CHECKIN:
+                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
+                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CHECKIN));
+            case CHECKOUT:
+                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
+                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CHECKOUT));
+        }
     }
 
 }

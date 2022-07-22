@@ -1,10 +1,7 @@
 package com.urbainski.reservasapi.reservations.infra.controller;
 
 import com.urbainski.reservasapi.reservations.ReservationOperation;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationRequestDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationResponseDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.GetAllReservationResponseDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.GetReservationByIdResponseDTO;
+import com.urbainski.reservasapi.reservations.infra.controller.dto.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +35,17 @@ public class ReservationControllerImpl implements ReservationController {
                     var uri = uriComponentsBuilder.path("/reservations/{id}").buildAndExpand(value.getId()).toUri();
                     return ResponseEntity.created(uri).body(value);
                 })
+                .log();
+    }
+
+    @Override
+    @PutMapping("/{id}")
+    public Mono<ResponseEntity<UpdateReservationResponseDTO>> update(@RequestBody Mono<UpdateReservationRequestDTO> dto, @PathVariable String id) {
+        return dto.map(mapper::toReservation)
+                .doOnNext(value -> value.setId(id))
+                .flatMap(operation::update)
+                .map(mapper::toUpdateReservationResponseDTO)
+                .map(ResponseEntity::ok)
                 .log();
     }
 

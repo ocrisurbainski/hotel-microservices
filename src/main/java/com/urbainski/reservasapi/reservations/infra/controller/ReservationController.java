@@ -1,10 +1,7 @@
 package com.urbainski.reservasapi.reservations.infra.controller;
 
 import com.urbainski.reservasapi.commons.exception.handler.dto.ResponseErrorDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationRequestDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationResponseDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.GetAllReservationResponseDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.GetReservationByIdResponseDTO;
+import com.urbainski.reservasapi.reservations.infra.controller.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,6 +25,19 @@ public interface ReservationController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     Mono<ResponseEntity<CreateReservationResponseDTO>> save(Mono<CreateReservationRequestDTO> dto, UriComponentsBuilder uriComponentsBuilder);
+
+    @Operation(operationId = "update", description = "Update the reservation")
+    @ApiResponse(responseCode = "200", description = "When the reservation is succesfull updated")
+    @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    @ApiResponse(responseCode = "404", description = "When there is no reservation with the given identifier", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    @ApiResponse(responseCode = "422", description = "When the reservation has invalid dates", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    Mono<ResponseEntity<UpdateReservationResponseDTO>> update(Mono<UpdateReservationRequestDTO> dto, @Parameter(description = "Identifier of reservation") String id);
 
     @Operation(operationId = "cancel", description = "Cancel reservation by their identifier")
     @ApiResponse(responseCode = "200", description = "When reservation is succesfull canceled")

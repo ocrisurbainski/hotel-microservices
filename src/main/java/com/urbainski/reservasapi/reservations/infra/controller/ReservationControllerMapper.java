@@ -1,10 +1,7 @@
 package com.urbainski.reservasapi.reservations.infra.controller;
 
 import com.urbainski.reservasapi.reservations.domain.Reservation;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationRequestDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.CreateReservationResponseDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.GetAllReservationResponseDTO;
-import com.urbainski.reservasapi.reservations.infra.controller.dto.GetReservationByIdResponseDTO;
+import com.urbainski.reservasapi.reservations.infra.controller.dto.*;
 
 @org.mapstruct.Mapper(componentModel = "spring")
 public interface ReservationControllerMapper {
@@ -12,6 +9,10 @@ public interface ReservationControllerMapper {
     Reservation toReservation(CreateReservationRequestDTO dto);
 
     CreateReservationResponseDTO toCreateReservationResponseDTO(Reservation reservation);
+
+    Reservation toReservation(UpdateReservationRequestDTO dto);
+
+    UpdateReservationResponseDTO toUpdateReservationResponseDTO(Reservation reservation);
 
     GetReservationByIdResponseDTO toGetReservationByIdResponseDTO(Reservation reservation);
 
