@@ -10,7 +10,8 @@ public enum SystemMessages {
     RESERVATION_STATUS_CHECKIN("msg.reservation.status.checkin"),
     RESERVATION_STATUS_CHECKOUT("msg.reservation.status.checkout"),
     RESERVATION_CHECKIN_TIME_DOES_NOT_ALLOW("msg.reservation.checkin.time.does.not.allow"),
-    RESERVATION_CHECKIN_DATE_DOES_NOT_ALLOW("msg.reservation.checkin.date.does.not.allow");
+    RESERVATION_CHECKIN_DATE_DOES_NOT_ALLOW("msg.reservation.checkin.date.does.not.allow"),
+    RESERVATION_DATES_INVALID("msg.reservation.dates.invalid");
 
     SystemMessages(String key) {
         this.key = key;

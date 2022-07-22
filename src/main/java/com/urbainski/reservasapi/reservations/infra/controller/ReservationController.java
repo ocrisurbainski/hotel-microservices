@@ -24,6 +24,9 @@ public interface ReservationController {
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
+    @ApiResponse(responseCode = "422", description = "When the reservation has invalid dates", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
     Mono<ResponseEntity<CreateReservationResponseDTO>> save(Mono<CreateReservationRequestDTO> dto, UriComponentsBuilder uriComponentsBuilder);
 
     @Operation(operationId = "cancel", description = "Cancel reservation by their identifier")

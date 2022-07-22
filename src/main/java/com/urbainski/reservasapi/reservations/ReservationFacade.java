@@ -5,6 +5,7 @@ import com.urbainski.reservasapi.reservations.config.ReservationCheckinPropertie
 import com.urbainski.reservasapi.reservations.domain.Reservation;
 import com.urbainski.reservasapi.reservations.domain.ReservationStatus;
 import com.urbainski.reservasapi.reservations.exception.ReservationCheckinException;
+import com.urbainski.reservasapi.reservations.exception.ReservationException;
 import com.urbainski.reservasapi.reservations.exception.ReservationStatusException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -36,6 +37,7 @@ public class ReservationFacade implements ReservationOperation {
     @Override
     public Mono<Reservation> save(Reservation reservation) {
         return Mono.just(reservation)
+                .map(this::validateSaveAction)
                 .doOnNext(value -> value.setStatus(ReservationStatus.RESERVED))
                 .map(repository::save)
                 .flatMap(value -> value);
@@ -70,6 +72,14 @@ public class ReservationFacade implements ReservationOperation {
     @Override
     public Flux<Reservation> findAll() {
         return repository.findAll();
+    }
+
+    private Reservation validateSaveAction(Reservation reservation) {
+        if (reservation.getDateReservationFinish().isBefore(reservation.getDateReservationInitial())) {
+            throw ReservationException.newInstanceWithStatusUnprocessableEntity(
+                    messageSourceWrapperComponent.getMessage(RESERVATION_DATES_INVALID));
+        }
+        return reservation;
     }
 
     private Reservation validateCancelAction(Reservation reservation) {
