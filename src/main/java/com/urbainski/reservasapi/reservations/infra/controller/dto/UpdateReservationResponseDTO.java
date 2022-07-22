@@ -16,7 +16,6 @@ public class UpdateReservationResponseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateReservationFinish;
     private boolean parkingSpace;
-    private CreateReservationCustomerResponseDTO customerPayment;
     private CreateReservationCustomerResponseDTO guest;
     private ReservationStatus status;
 }

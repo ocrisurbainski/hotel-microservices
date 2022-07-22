@@ -21,7 +21,5 @@ public class UpdateReservationRequestDTO {
     private LocalDate dateReservationFinish;
     private boolean parkingSpace;
     @NotNull
-    private CreateReservationCustomerRequestDTO customerPayment;
-    @NotNull
     private CreateReservationCustomerRequestDTO guest;
 }

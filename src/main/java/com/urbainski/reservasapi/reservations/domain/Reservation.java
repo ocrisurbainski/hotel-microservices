@@ -17,7 +17,6 @@ public class Reservation {
     private LocalDateTime dateCheckin;
     private LocalDateTime dateCheckout;
     private boolean parkingSpace;
-    private ReservationCustomer customerPayment;
     private ReservationCustomer guest;
     private ReservationStatus status;
 

@@ -22,7 +22,6 @@ public class ReservationDocument {
     private LocalDateTime dateCheckin;
     private LocalDateTime dateCheckout;
     private boolean parkingSpace;
-    private ReservationCustomerDocument customerPayment;
     private ReservationCustomerDocument guest;
     private ReservationStatus status;
     @CreatedDate

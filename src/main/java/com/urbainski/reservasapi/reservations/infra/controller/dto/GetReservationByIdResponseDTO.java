@@ -23,7 +23,6 @@ public class GetReservationByIdResponseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCheckout;
     private boolean parkingSpace;
-    private CreateReservationCustomerResponseDTO customerPayment;
     private CreateReservationCustomerResponseDTO guest;
     private ReservationStatus status;
 }
