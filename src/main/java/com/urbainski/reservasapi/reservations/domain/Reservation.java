@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ public class Reservation {
     private boolean parkingSpace;
     private ReservationCustomer guest;
     private ReservationStatus status;
+    private BigDecimal amount;
 
     @Override
     public String toString() {

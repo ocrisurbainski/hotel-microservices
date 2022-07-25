@@ -6,6 +6,7 @@ import com.urbainski.reservasapi.reservations.domain.ReservationStatus;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -25,4 +26,5 @@ public class GetReservationByDocumentResponseDTO {
     private boolean parkingSpace;
     private GetReservationCustomerByDocumentResponseDTO guest;
     private ReservationStatus status;
+    private BigDecimal amount;
 }

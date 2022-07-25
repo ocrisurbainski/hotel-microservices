@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ public class ReservationDocument {
     private boolean parkingSpace;
     private ReservationCustomerDocument guest;
     private ReservationStatus status;
+    private BigDecimal amount;
     @CreatedDate
     private LocalDateTime createdDate;
     @LastModifiedDate
