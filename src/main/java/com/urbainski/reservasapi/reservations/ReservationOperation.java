@@ -18,6 +18,8 @@ public interface ReservationOperation {
 
     Flux<Reservation> findByGuestDocument(String document);
 
+    Flux<Reservation> findByGuestName(String name);
+
     Flux<Reservation> findAll();
 
 }

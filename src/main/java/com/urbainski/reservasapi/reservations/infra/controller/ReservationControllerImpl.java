@@ -83,6 +83,14 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @GetMapping(path = "/customer/name/{name}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GetReservationByNameResponseDTO> findByGuestName(@PathVariable String name) {
+        return operation.findByGuestName(name)
+                .map(mapper::toGetReservationByNameResponseDTO)
+                .log();
+    }
+
+    @Override
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<GetAllReservationResponseDTO> findAll() {
         return operation.findAll()

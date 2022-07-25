@@ -9,4 +9,6 @@ public interface ReservationSpringRepository extends ReactiveMongoRepository<Res
 
     Flux<ReservationDocument> findByGuestDocument(String document);
 
+    Flux<ReservationDocument> findByGuestNameContainingIgnoreCase(String name);
+
 }

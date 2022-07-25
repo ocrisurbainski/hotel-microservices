@@ -77,6 +77,11 @@ public class ReservationMongoRepository implements ReservationRepository {
     }
 
     @Override
+    public Flux<Reservation> findByGuestName(String name) {
+        return reservationSpringRepository.findByGuestNameContainingIgnoreCase(name).map(mapper::toReservation);
+    }
+
+    @Override
     public Flux<Reservation> findAll() {
         return reservationSpringRepository.findAll().map(mapper::toReservation);
     }

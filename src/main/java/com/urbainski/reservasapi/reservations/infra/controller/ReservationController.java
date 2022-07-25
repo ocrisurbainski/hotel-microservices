@@ -79,6 +79,10 @@ public interface ReservationController {
     @ApiResponse(responseCode = "200", description = "When the search is successful")
     Flux<GetReservationByDocumentResponseDTO> findByGuestDocument(@Parameter(description = "Document guest of reservation") String document);
 
+    @Operation(operationId = "findByGuestName", description = "Find all reservations by guest name")
+    @ApiResponse(responseCode = "200", description = "When the search is successful")
+    Flux<GetReservationByNameResponseDTO> findByGuestName(@Parameter(description = "Name guest of reservation") String name);
+
     @Operation(operationId = "findAll", description = "Find all reservations")
     @ApiResponse(responseCode = "200", description = "When the search is successful")
     Flux<GetAllReservationResponseDTO> findAll();

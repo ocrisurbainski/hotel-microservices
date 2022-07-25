@@ -84,6 +84,11 @@ public class ReservationFacade implements ReservationOperation {
     }
 
     @Override
+    public Flux<Reservation> findByGuestName(String name) {
+        return repository.findByGuestName(name);
+    }
+
+    @Override
     public Flux<Reservation> findAll() {
         return repository.findAll();
     }
