@@ -59,7 +59,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @PatchMapping("/checkin/{id}")
-    public Mono<ResponseEntity<Void>> checkin(String id) {
+    public Mono<ResponseEntity<Void>> checkin(@PathVariable String id) {
         return operation.checkin(id)
                 .map(value -> ResponseEntity.ok().<Void>build())
                 .log();
