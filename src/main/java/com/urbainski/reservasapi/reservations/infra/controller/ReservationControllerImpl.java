@@ -66,6 +66,14 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @PatchMapping("/checkout/{id}")
+    public Mono<ResponseEntity<Void>> checkout(@PathVariable String id) {
+        return operation.checkout(id)
+                .map(value -> ResponseEntity.ok().<Void>build())
+                .log();
+    }
+
+    @Override
     @GetMapping("/{id}")
     public Mono<ResponseEntity<GetReservationByIdResponseDTO>> findById(@PathVariable String id) {
         return operation.findById(id)

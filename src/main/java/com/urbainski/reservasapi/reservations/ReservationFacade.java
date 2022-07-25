@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -38,7 +39,10 @@ public class ReservationFacade implements ReservationOperation {
     public Mono<Reservation> save(Reservation reservation) {
         return Mono.just(reservation)
                 .map(this::validateSaveAction)
-                .doOnNext(value -> value.setStatus(ReservationStatus.RESERVED))
+                .doOnNext(value -> {
+                    value.setStatus(ReservationStatus.RESERVED);
+                    value.setAmount(BigDecimal.ZERO);
+                })
                 .flatMap(repository::save);
     }
 
@@ -71,6 +75,17 @@ public class ReservationFacade implements ReservationOperation {
                     value.setDateCheckin(LocalDateTime.now());
                 })
                 .flatMap(repository::checkin);
+    }
+
+    @Override
+    public Mono<Reservation> checkout(String id) {
+        return repository.findById(id)
+                .map(this::validateCheckoutAction)
+                .doOnNext(value -> {
+                    value.setStatus(ReservationStatus.CHECKOUT);
+                    value.setDateCheckout(LocalDateTime.now());
+                })
+                .flatMap(repository::checkout);
     }
 
     @Override
@@ -130,6 +145,21 @@ public class ReservationFacade implements ReservationOperation {
                     messageSourceWrapperComponent.getMessage(RESERVATION_CHECKIN_TIME_DOES_NOT_ALLOW, new Object[]{checkinProperties.getHourInit()}));
         }
 
+        return reservation;
+    }
+
+    private Reservation validateCheckoutAction(Reservation reservation) {
+        switch (reservation.getStatus()) {
+            case RESERVED:
+                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
+                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_RESERVED));
+            case CANCELED:
+                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
+                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CANCELED));
+            case CHECKOUT:
+                throw ReservationStatusException.newInstanceWithStatusUnprocessableEntity(
+                        messageSourceWrapperComponent.getMessage(RESERVATION_STATUS_CHECKOUT));
+        }
         return reservation;
     }
 

@@ -65,6 +65,19 @@ public interface ReservationController {
     })
     Mono<ResponseEntity<Void>> checkin(@Parameter(description = "Identifier of reservation") String id);
 
+    @Operation(operationId = "checkout", description = "Checkout of reservation by their identifier")
+    @ApiResponse(responseCode = "200", description = "When checkout of reservation is succesfull")
+    @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    @ApiResponse(responseCode = "404", description = "When there is no reservation with the given identifier", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    @ApiResponse(responseCode = "422", description = "When the reservation is in a status other than checkin", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    Mono<ResponseEntity<Void>> checkout(@Parameter(description = "Identifier of reservation") String id);
+
     @Operation(operationId = "findById", description = "Find a reservation by their identifier")
     @ApiResponse(responseCode = "200", description = "When the reservation is found")
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {

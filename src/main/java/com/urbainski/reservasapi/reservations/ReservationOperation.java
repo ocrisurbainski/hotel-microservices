@@ -14,6 +14,8 @@ public interface ReservationOperation {
 
     Mono<Reservation> checkin(String id);
 
+    Mono<Reservation> checkout(String id);
+
     Mono<Reservation> findById(String id);
 
     Flux<Reservation> findByGuestDocument(String document);
