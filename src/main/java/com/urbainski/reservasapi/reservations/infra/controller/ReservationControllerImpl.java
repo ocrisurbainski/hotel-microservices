@@ -75,6 +75,14 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @GetMapping(path = "/document/{document}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GetReservationByDocumentResponseDTO> findByGuestDocument(@PathVariable String document) {
+        return operation.findByGuestDocument(document)
+                .map(mapper::toGetReservationByDocumentResponseDTO)
+                .log();
+    }
+
+    @Override
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<GetAllReservationResponseDTO> findAll() {
         return operation.findAll()

@@ -16,6 +16,8 @@ public interface ReservationControllerMapper {
 
     GetReservationByIdResponseDTO toGetReservationByIdResponseDTO(Reservation reservation);
 
+    GetReservationByDocumentResponseDTO toGetReservationByDocumentResponseDTO(Reservation reservation);
+
     GetAllReservationResponseDTO toGetAllReservationResponseDTO(Reservation reservation);
 
 }

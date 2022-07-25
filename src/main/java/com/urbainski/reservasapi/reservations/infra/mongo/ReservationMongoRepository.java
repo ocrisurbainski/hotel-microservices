@@ -72,6 +72,11 @@ public class ReservationMongoRepository implements ReservationRepository {
     }
 
     @Override
+    public Flux<Reservation> findByGuestDocument(String document) {
+        return reservationSpringRepository.findByGuestDocument(document).map(mapper::toReservation);
+    }
+
+    @Override
     public Flux<Reservation> findAll() {
         return reservationSpringRepository.findAll().map(mapper::toReservation);
     }

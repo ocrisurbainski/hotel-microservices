@@ -75,6 +75,10 @@ public interface ReservationController {
     })
     Mono<ResponseEntity<GetReservationByIdResponseDTO>> findById(@Parameter(description = "Identifier of reservation") String id);
 
+    @Operation(operationId = "findByGuestDocument", description = "Find all reservations by guest document")
+    @ApiResponse(responseCode = "200", description = "When the search is successful")
+    Flux<GetReservationByDocumentResponseDTO> findByGuestDocument(@Parameter(description = "Document guest of reservation") String document);
+
     @Operation(operationId = "findAll", description = "Find all reservations")
     @ApiResponse(responseCode = "200", description = "When the search is successful")
     Flux<GetAllReservationResponseDTO> findAll();

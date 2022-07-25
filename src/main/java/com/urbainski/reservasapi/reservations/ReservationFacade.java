@@ -79,6 +79,11 @@ public class ReservationFacade implements ReservationOperation {
     }
 
     @Override
+    public Flux<Reservation> findByGuestDocument(String document) {
+        return repository.findByGuestDocument(document);
+    }
+
+    @Override
     public Flux<Reservation> findAll() {
         return repository.findAll();
     }
