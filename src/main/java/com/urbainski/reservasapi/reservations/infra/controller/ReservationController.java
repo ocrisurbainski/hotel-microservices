@@ -50,7 +50,7 @@ public interface ReservationController {
     @ApiResponse(responseCode = "422", description = "When the reservation is already canceled", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
-    Mono<ResponseEntity<Void>> cancel(String id);
+    Mono<ResponseEntity<Void>> cancel(@Parameter(description = "Identifier of reservation") String id);
 
     @Operation(operationId = "cancel", description = "Checkin reservation by their identifier")
     @ApiResponse(responseCode = "200", description = "When checkin of reservation is succesfull")
@@ -63,7 +63,7 @@ public interface ReservationController {
     @ApiResponse(responseCode = "422", description = "When the reservation is in a status other than reserved", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
-    Mono<ResponseEntity<Void>> checkin(String id);
+    Mono<ResponseEntity<Void>> checkin(@Parameter(description = "Identifier of reservation") String id);
 
     @Operation(operationId = "findById", description = "Find a reservation by their identifier")
     @ApiResponse(responseCode = "200", description = "When the reservation is found")
