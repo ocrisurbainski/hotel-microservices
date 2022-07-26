@@ -2,24 +2,56 @@ package com.urbainski.reservasapi.reservations.infra.controller;
 
 import com.urbainski.reservasapi.reservations.domain.Reservation;
 import com.urbainski.reservasapi.reservations.infra.controller.dto.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.MappingTarget;
+
+import java.math.BigDecimal;
 
 @org.mapstruct.Mapper(componentModel = "spring")
-public interface ReservationControllerMapper {
+public abstract class ReservationControllerMapper {
 
-    Reservation toReservation(CreateReservationRequestDTO dto);
+    abstract Reservation toReservation(CreateReservationRequestDTO dto);
 
-    CreateReservationResponseDTO toCreateReservationResponseDTO(Reservation reservation);
+    abstract CreateReservationResponseDTO toCreateReservationResponseDTO(Reservation reservation);
 
-    Reservation toReservation(UpdateReservationRequestDTO dto);
+    abstract Reservation toReservation(UpdateReservationRequestDTO dto);
 
-    UpdateReservationResponseDTO toUpdateReservationResponseDTO(Reservation reservation);
+    abstract UpdateReservationResponseDTO toUpdateReservationResponseDTO(Reservation reservation);
 
-    GetReservationByIdResponseDTO toGetReservationByIdResponseDTO(Reservation reservation);
+    abstract GetReservationByIdResponseDTO toGetReservationByIdResponseDTO(Reservation reservation);
 
-    GetReservationByDocumentResponseDTO toGetReservationByDocumentResponseDTO(Reservation reservation);
+    abstract GetReservationByDocumentResponseDTO toGetReservationByDocumentResponseDTO(Reservation reservation);
 
-    GetReservationByNameResponseDTO toGetReservationByNameResponseDTO(Reservation reservation);
+    abstract GetReservationByNameResponseDTO toGetReservationByNameResponseDTO(Reservation reservation);
 
-    GetAllReservationResponseDTO toGetAllReservationResponseDTO(Reservation reservation);
+    abstract GetAllReservationResponseDTO toGetAllReservationResponseDTO(Reservation reservation);
+
+    @AfterMapping
+    protected void afterMappingToGetReservationByIdResponseDTO(@MappingTarget GetReservationByIdResponseDTO dto) {
+        if (BigDecimal.ZERO.equals(dto.getAmount())) {
+            dto.setAmount(null);
+        }
+    }
+
+    @AfterMapping
+    protected void afterMappingToGetReservationByDocumentResponseDTO(@MappingTarget GetReservationByDocumentResponseDTO dto) {
+        if (BigDecimal.ZERO.equals(dto.getAmount())) {
+            dto.setAmount(null);
+        }
+    }
+
+    @AfterMapping
+    protected void afterMappingToGetReservationByNameResponseDTO(@MappingTarget GetReservationByNameResponseDTO dto) {
+        if (BigDecimal.ZERO.equals(dto.getAmount())) {
+            dto.setAmount(null);
+        }
+    }
+
+    @AfterMapping
+    protected void afterMappingToGetAllReservationResponseDTO(@MappingTarget GetAllReservationResponseDTO dto) {
+        if (BigDecimal.ZERO.equals(dto.getAmount())) {
+            dto.setAmount(null);
+        }
+    }
 
 }
