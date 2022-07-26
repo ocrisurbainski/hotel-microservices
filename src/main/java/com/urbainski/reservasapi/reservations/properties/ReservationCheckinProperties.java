@@ -1,4 +1,4 @@
-package com.urbainski.reservasapi.reservations.config;
+package com.urbainski.reservasapi.reservations.properties;
 
 import lombok.Getter;
 import lombok.Setter;

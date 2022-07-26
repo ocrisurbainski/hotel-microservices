@@ -1,12 +1,13 @@
 package com.urbainski.reservasapi.reservations;
 
 import com.urbainski.reservasapi.commons.message.MessageSourceWrapperComponent;
-import com.urbainski.reservasapi.reservations.config.ReservationCheckinProperties;
+import com.urbainski.reservasapi.reservations.calculate.service.ReservationCalculateOperation;
 import com.urbainski.reservasapi.reservations.domain.Reservation;
 import com.urbainski.reservasapi.reservations.domain.ReservationStatus;
 import com.urbainski.reservasapi.reservations.exception.ReservationCheckinException;
 import com.urbainski.reservasapi.reservations.exception.ReservationException;
 import com.urbainski.reservasapi.reservations.exception.ReservationStatusException;
+import com.urbainski.reservasapi.reservations.properties.ReservationCheckinProperties;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,12 +28,16 @@ public class ReservationFacade implements ReservationOperation {
 
     private final ReservationCheckinProperties checkinProperties;
 
+    private final ReservationCalculateOperation reservationCalculateOperation;
+
     public ReservationFacade(ReservationRepository repository,
                              MessageSourceWrapperComponent messageSourceWrapperComponent,
-                             ReservationCheckinProperties checkinProperties) {
+                             ReservationCheckinProperties checkinProperties,
+                             ReservationCalculateOperation reservationCalculateOperation) {
         this.repository = repository;
         this.messageSourceWrapperComponent = messageSourceWrapperComponent;
         this.checkinProperties = checkinProperties;
+        this.reservationCalculateOperation = reservationCalculateOperation;
     }
 
     @Override
@@ -84,6 +89,8 @@ public class ReservationFacade implements ReservationOperation {
                 .doOnNext(value -> {
                     value.setStatus(ReservationStatus.CHECKOUT);
                     value.setDateCheckout(LocalDateTime.now());
+
+                    reservationCalculateOperation.calculate(value);
                 })
                 .flatMap(repository::checkout);
     }
