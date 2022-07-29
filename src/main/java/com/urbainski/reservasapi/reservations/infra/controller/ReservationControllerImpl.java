@@ -40,7 +40,8 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<UpdateReservationResponseDTO>> update(@RequestBody Mono<UpdateReservationRequestDTO> dto, @PathVariable String id) {
+    public Mono<ResponseEntity<UpdateReservationResponseDTO>> update(
+            @RequestBody @Valid Mono<UpdateReservationRequestDTO> dto, @PathVariable String id) {
         return dto.map(mapper::toReservation)
                 .doOnNext(value -> value.setId(id))
                 .flatMap(operation::update)
