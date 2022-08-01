@@ -4,6 +4,8 @@ import com.urbainski.reservasapi.reservations.domain.Reservation;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 public interface ReservationOperation {
 
     Mono<Reservation> save(Reservation reservation);
@@ -21,6 +23,8 @@ public interface ReservationOperation {
     Flux<Reservation> findByGuestDocument(String document);
 
     Flux<Reservation> findByGuestName(String name);
+
+    Flux<Reservation> findByStatusCheckin();
 
     Flux<Reservation> findAll();
 

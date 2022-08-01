@@ -96,6 +96,10 @@ public interface ReservationController {
     @ApiResponse(responseCode = "200", description = "When the search is successful")
     Flux<GetReservationByNameResponseDTO> findByGuestName(@Parameter(description = "Name guest of reservation") String name);
 
+    @Operation(operationId = "findByStatusCheckin", description = "Find all reservations the status is Checkin")
+    @ApiResponse(responseCode = "200", description = "When the search is successful")
+    Flux<GetReservationByStatusCheckinResponseDTO> findByStatusCheckin();
+
     @Operation(operationId = "findAll", description = "Find all reservations")
     @ApiResponse(responseCode = "200", description = "When the search is successful")
     Flux<GetAllReservationResponseDTO> findAll();

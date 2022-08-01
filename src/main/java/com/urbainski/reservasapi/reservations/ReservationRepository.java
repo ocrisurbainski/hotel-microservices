@@ -22,6 +22,8 @@ public interface ReservationRepository {
 
     Flux<Reservation> findByGuestName(String name);
 
+    Flux<Reservation> findByStatusCheckin();
+
     Flux<Reservation> findAll();
 
 }

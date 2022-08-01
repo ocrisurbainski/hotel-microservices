@@ -24,6 +24,8 @@ public abstract class ReservationControllerMapper {
 
     abstract GetReservationByNameResponseDTO toGetReservationByNameResponseDTO(Reservation reservation);
 
+    abstract GetReservationByStatusCheckinResponseDTO toGetReservationByStatusCheckinResponseDTO(Reservation reservation);
+
     abstract GetAllReservationResponseDTO toGetAllReservationResponseDTO(Reservation reservation);
 
     @AfterMapping

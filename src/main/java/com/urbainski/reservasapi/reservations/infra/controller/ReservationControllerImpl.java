@@ -100,6 +100,14 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @GetMapping(value = "/checkin", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GetReservationByStatusCheckinResponseDTO> findByStatusCheckin() {
+        return operation.findByStatusCheckin()
+                .map(mapper::toGetReservationByStatusCheckinResponseDTO)
+                .log();
+    }
+
+    @Override
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<GetAllReservationResponseDTO> findAll() {
         return operation.findAll()

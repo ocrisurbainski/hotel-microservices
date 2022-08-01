@@ -111,6 +111,11 @@ public class ReservationFacade implements ReservationOperation {
     }
 
     @Override
+    public Flux<Reservation> findByStatusCheckin() {
+        return repository.findByStatusCheckin();
+    }
+
+    @Override
     public Flux<Reservation> findAll() {
         return repository.findAll();
     }

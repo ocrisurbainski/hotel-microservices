@@ -4,6 +4,7 @@ import com.urbainski.reservasapi.commons.exception.NotFoundException;
 import com.urbainski.reservasapi.commons.message.MessageSourceWrapperComponent;
 import com.urbainski.reservasapi.reservations.ReservationRepository;
 import com.urbainski.reservasapi.reservations.domain.Reservation;
+import com.urbainski.reservasapi.reservations.domain.ReservationStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -84,6 +85,11 @@ public class ReservationMongoRepository implements ReservationRepository {
     @Override
     public Flux<Reservation> findByGuestName(String name) {
         return reservationSpringRepository.findByGuestNameContainingIgnoreCase(name).map(mapper::toReservation);
+    }
+
+    @Override
+    public Flux<Reservation> findByStatusCheckin() {
+        return reservationSpringRepository.findByStatusEquals(ReservationStatus.CHECKIN).map(mapper::toReservation);
     }
 
     @Override
