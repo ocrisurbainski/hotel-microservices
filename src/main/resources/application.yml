@@ -1,0 +1,75 @@
+#SERVER
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      uri: mongodb://${RESERVAS_API_USER:reservas-api-user}:${RESERVAS_API_PASSWORD:reservas-api-pass}@${RESERVAS_API_DB_HOST:localhost}:${RESERVAS_API_DB_PORT:27017}/${RESERVAS_API_DB_NAME:reservas_api_db}
+      auto-index-creation: true
+      database: ${RESERVAS_API_DB_NAME:reservas_api_db}
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: true
+
+info:
+  app:
+    name: ^project.name^
+    description: ^project.description^
+    version: ^project.version^
+
+reservation:
+  checkin:
+    hour-init: "12:00"
+  checkout:
+    hour-limit: "16:30"
+  prices:
+    monday:
+      code: 0
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    tuesday:
+      code: 1
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    wednesday:
+      code: 2
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    thursday:
+      code: 3
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    friday:
+      code: 4
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    saturday:
+      code: 5
+      diary:
+        normal: 150.0
+      parking:
+        normal: 20.0
+    sunday:
+      code: 6
+      diary:
+        normal: 150.0
+      parking:
+        normal: 20.0
