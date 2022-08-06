@@ -1,0 +1,26 @@
+#SERVER
+server:
+  port: 8090
+  servlet:
+    context-path: /
+
+spring:
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      uri: mongodb://${HOTEL_CUSTOMER_USER:hotel_customer_user}:${HOTEL_CUSTOMER_PASSWORD:kOqEVT54nMHI}@${HOTEL_CUSTOMER_DB_HOST:localhost}:${HOTEL_CUSTOMER_DB_PORT:27017}/${HOTEL_CUSTOMER_DB_NAME:hotel_customer_db}
+      auto-index-creation: true
+      database: ${HOTEL_CUSTOMER_DB_NAME:hotel_customer_db}
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: true
+
+info:
+  app:
+    name: ^project.name^
+    description: ^project.description^
+    version: ^project.version^

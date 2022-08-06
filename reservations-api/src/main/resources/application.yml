@@ -1,0 +1,75 @@
+#SERVER
+server:
+  port: 8091
+  servlet:
+    context-path: /
+
+spring:
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      uri: mongodb://${HOTEL_RESERVATIONS_USER:hotel_reservations_user}:${HOTEL_RESERVATIONS_PASSWORD:E5Fd6fvO188d}@${HOTEL_RESERVATIONS_DB_HOST:localhost}:${HOTEL_RESERVATIONS_DB_PORT:27017}/${HOTEL_RESERVATIONS_DB_NAME:hotel_reservations_db}
+      auto-index-creation: true
+      database: ${HOTEL_RESERVATIONS_DB_NAME:hotel_reservations_db}
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: true
+
+info:
+  app:
+    name: ^project.name^
+    description: ^project.description^
+    version: ^project.version^
+
+reservation:
+  checkin:
+    hour-init: "12:00"
+  checkout:
+    hour-limit: "16:30"
+  prices:
+    monday:
+      code: 0
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    tuesday:
+      code: 1
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    wednesday:
+      code: 2
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    thursday:
+      code: 3
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    friday:
+      code: 4
+      diary:
+        normal: 120.0
+      parking:
+        normal: 15.0
+    saturday:
+      code: 5
+      diary:
+        normal: 150.0
+      parking:
+        normal: 20.0
+    sunday:
+      code: 6
+      diary:
+        normal: 150.0
+      parking:
+        normal: 20.0
