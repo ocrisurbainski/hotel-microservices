@@ -1,6 +1,8 @@
 package com.urbainski.reservations;
 
+import com.urbainski.commons.exception.NotFoundException;
 import com.urbainski.commons.message.MessageSourceWrapperComponent;
+import com.urbainski.customers.webclient.CustomerWebClientComponent;
 import com.urbainski.reservations.calculate.service.ReservationCalculateOperation;
 import com.urbainski.reservations.domain.Reservation;
 import com.urbainski.reservations.domain.ReservationStatus;
@@ -30,19 +32,25 @@ public class ReservationFacade implements ReservationOperation {
 
     private final ReservationCalculateOperation reservationCalculateOperation;
 
+    private final CustomerWebClientComponent customerWebClientComponent;
+
     public ReservationFacade(ReservationRepository repository,
                              MessageSourceWrapperComponent messageSourceWrapperComponent,
                              ReservationCheckinProperties checkinProperties,
-                             ReservationCalculateOperation reservationCalculateOperation) {
+                             ReservationCalculateOperation reservationCalculateOperation,
+                             CustomerWebClientComponent customerWebClientComponent) {
         this.repository = repository;
         this.messageSourceWrapperComponent = messageSourceWrapperComponent;
         this.checkinProperties = checkinProperties;
         this.reservationCalculateOperation = reservationCalculateOperation;
+        this.customerWebClientComponent = customerWebClientComponent;
     }
 
     @Override
     public Mono<Reservation> save(Reservation reservation) {
         return Mono.just(reservation)
+                .filterWhen(value -> customerWebClientComponent.checkCustomerExists(value.getGuest().getId()))
+                .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CUSTOMER_NOT_FOUND.getKey()))))
                 .map(this::validateSaveAction)
                 .doOnNext(value -> {
                     value.setStatus(ReservationStatus.RESERVED);
@@ -53,14 +61,16 @@ public class ReservationFacade implements ReservationOperation {
 
     @Override
     public Mono<Reservation> update(Reservation reservation) {
-        return repository.findById(reservation.getId())
+        return Mono.just(reservation)
+                .filterWhen(value -> customerWebClientComponent.checkCustomerExists(value.getGuest().getId()))
+                .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(CUSTOMER_NOT_FOUND.getKey()))))
+                .flatMap(value -> repository.findById(value.getId()))
                 .map(value -> {
                     reservation.setStatus(value.getStatus());
                     return reservation;
                 })
                 .map(this::validateUpdateAction)
                 .flatMap(repository::update);
-
     }
 
     @Override

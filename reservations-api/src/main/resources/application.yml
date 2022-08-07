@@ -73,3 +73,14 @@ reservation:
         normal: 150.0
       parking:
         normal: 20.0
+
+clients:
+  config:
+    timeout:
+      seconds: 15
+  customers: http://localhost:8090/
+
+logging:
+  level:
+    com:
+      urbainski: DEBUG
