@@ -69,6 +69,11 @@ public class ReservationMongoRepository implements ReservationRepository {
     }
 
     @Override
+    public Mono<Boolean> existsByGuestId(String guestId) {
+        return reservationSpringRepository.existsByGuestId(guestId);
+    }
+
+    @Override
     public Mono<Reservation> findById(String id) {
         return reservationSpringRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(messageSourceWrapperComponent.getMessage(RESERVATION_NOT_FOUND.getKey()))))

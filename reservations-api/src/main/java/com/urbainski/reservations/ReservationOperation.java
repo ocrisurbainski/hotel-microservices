@@ -18,6 +18,8 @@ public interface ReservationOperation {
 
     Mono<Reservation> findById(String id);
 
+    Mono<Boolean> existsByGuestId(String guestId);
+
     Flux<Reservation> findByGuestDocument(String document);
 
     Flux<Reservation> findByGuestName(String name);

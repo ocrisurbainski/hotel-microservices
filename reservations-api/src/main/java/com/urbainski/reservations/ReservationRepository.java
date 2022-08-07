@@ -16,6 +16,8 @@ public interface ReservationRepository {
 
     Mono<Reservation> checkout(Reservation reservation);
 
+    Mono<Boolean> existsByGuestId(String guestId);
+
     Mono<Reservation> findById(String id);
 
     Flux<Reservation> findByGuestDocument(String document);
