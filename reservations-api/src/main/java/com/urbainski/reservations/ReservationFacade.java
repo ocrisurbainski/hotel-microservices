@@ -111,6 +111,11 @@ public class ReservationFacade implements ReservationOperation {
     }
 
     @Override
+    public Mono<Boolean> existsByGuestId(String guestId) {
+        return repository.existsByGuestId(guestId);
+    }
+
+    @Override
     public Flux<Reservation> findByGuestDocument(String document) {
         return repository.findByGuestDocument(document);
     }

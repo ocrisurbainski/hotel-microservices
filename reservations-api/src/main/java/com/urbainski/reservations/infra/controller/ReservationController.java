@@ -84,6 +84,13 @@ public interface ReservationController {
     })
     Mono<ResponseEntity<Void>> checkout(@Parameter(description = "Identifier of reservation") String id);
 
+    @Operation(operationId = "existsByGuestId", description = "Exists the reservations by guest identifier")
+    @ApiResponse(responseCode = "200", description = "When the operation is executed")
+    @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    Mono<ResponseEntity<Boolean>> existsByGuestId(@Parameter(description = "Identifier of guest") String guestId);
+
     @Operation(operationId = "findById", description = "Find a reservation by their identifier")
     @ApiResponse(responseCode = "200", description = "When the reservation is found")
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {

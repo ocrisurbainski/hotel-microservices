@@ -75,6 +75,14 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @GetMapping("/customer/exists/{id}")
+    public Mono<ResponseEntity<Boolean>> existsByGuestId(@PathVariable(name = "id") String guestId) {
+        return operation.existsByGuestId(guestId)
+                .map(ResponseEntity::ok)
+                .log();
+    }
+
+    @Override
     @GetMapping("/{id}")
     public Mono<ResponseEntity<GetReservationByIdResponseDTO>> findById(@PathVariable String id) {
         return operation.findById(id)
