@@ -76,6 +76,9 @@ reservation:
 
 clients:
   config:
+    retry:
+      max-attempts: 3
+      fixed-delay-in-seconds: 5
     timeout:
       seconds: 15
   customers: http://localhost:8090/
