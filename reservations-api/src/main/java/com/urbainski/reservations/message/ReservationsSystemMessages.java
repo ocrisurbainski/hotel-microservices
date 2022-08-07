@@ -1,6 +1,7 @@
 package com.urbainski.reservations.message;
 
 public enum ReservationsSystemMessages {
+    CUSTOMER_NOT_FOUND("msg.customer.not.found.key"),
     RESERVATION_NOT_FOUND("msg.reservation.not.found.key"),
     RESERVATION_STATUS_CANCELED_INVALID("msg.reservation.status.canceled.invalid"),
     RESERVATION_STATUS_RESERVED("msg.reservation.status.reserved"),

@@ -21,6 +21,9 @@ public interface ReservationController {
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
+    @ApiResponse(responseCode = "404", description = "When guest not exists", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
     @ApiResponse(responseCode = "422", description = "When the reservation has invalid dates", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
@@ -29,6 +32,9 @@ public interface ReservationController {
     @Operation(operationId = "update", description = "Update the reservation")
     @ApiResponse(responseCode = "200", description = "When the reservation is succesfull updated")
     @ApiResponse(responseCode = "400", description = "When the input data is wrong", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    @ApiResponse(responseCode = "404", description = "When guest not exists", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     @ApiResponse(responseCode = "404", description = "When there is no reservation with the given identifier", content = {
