@@ -24,3 +24,17 @@ info:
     name: ^project.name^
     description: ^project.description^
     version: ^project.version^
+
+clients:
+  config:
+    retry:
+      max-attempts: 3
+      fixed-delay-in-seconds: 5
+    timeout:
+      seconds: 15
+  reservations: http://localhost:8091/
+
+logging:
+  level:
+    com:
+      urbainski: DEBUG

@@ -1,7 +1,7 @@
 package com.urbainski.customers.infra.controller;
 
-import com.urbainski.customers.infra.controller.dto.*;
 import com.urbainski.commons.exception.handler.dto.ResponseErrorDTO;
+import com.urbainski.customers.infra.controller.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -39,6 +39,9 @@ public interface CustomerController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     @ApiResponse(responseCode = "404", description = "When there is no customer with the given identifier", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
+    })
+    @ApiResponse(responseCode = "422", description = "When the customer cannot be excluded because they already have reservations", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseErrorDTO.class))
     })
     Mono<ResponseEntity<Void>> deleteById(@Parameter(description = "Identifier of customer") String id);
